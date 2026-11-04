@@ -1,0 +1,59 @@
+﻿---
+import sanitizeHtml from "sanitize-html";
+
+interface Props {
+	headline: string;
+	description: string;
+	publishDate: Date;
+	keywords: string[];
+	articleSection: string;
+	publisher: {
+		name: string;
+		url?: string;
+	};
+	defaultAuthor: {
+		name: string;
+		url?: string;
+	};
+}
+
+const {
+	headline,
+	description,
+	publishDate,
+	keywords,
+	articleSection,
+	publisher,
+	defaultAuthor: siteAuthor,
+} = Astro.props;
+
+const defaultOrganization = {
+	"@type": "Organization",
+	name: publisher.name,
+	url: publisher.url,
+};
+
+const typedAuthor = {
+	author: {
+		"@type": "Person",
+		name: siteAuthor.name,
+		url: siteAuthor.url,
+	},
+};
+
+const postSchema = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	url: Astro.url,
+	image: new URL(`og.png`, Astro.url),
+	headline: headline,
+	description: description,
+	keywords: keywords,
+	datePublished: new Date(publishDate).toISOString(),
+	publisher: defaultOrganization,
+	articleSection: articleSection,
+	...typedAuthor,
+};
+---
+
+<script is:inline type="application/ld+json" set:html={sanitizeHtml(JSON.stringify(postSchema))}></script>

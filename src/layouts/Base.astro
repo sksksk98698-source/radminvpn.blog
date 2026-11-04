@@ -1,0 +1,27 @@
+﻿---
+import type { BaseLayout } from "@/types/layouts";
+import "@/styles/global.css";
+import GodRay from "@/components/atoms/godray/GodRay.astro";
+import DefaultHead from "@/components/utility/DefaultHead.astro";
+import GoogleAnalytic from "@/components/utility/GoogleAnalytic.astro";
+export interface Props extends BaseLayout {}
+
+const { themeColor } = Astro.props;
+---
+<html class="scroll-smooth motion-reduce:scroll-auto" lang={Astro.currentLocale}>
+  <head>
+    <!-- Charset declaration is missing or occurs too late in the HTML -->
+    <!-- https://developer.chrome.com/docs/lighthouse/best-practices/charset -->
+    <meta charset="UTF-8">
+    <!--  -->
+    <DefaultHead { ...Astro.props}/>
+    <GoogleAnalytic />
+    <slot name="head" />
+  </head>
+  <body
+    class="bg-background text-foreground selection:bg-primary selection:text-primary-foreground"
+  >
+    <slot />
+    <GodRay {themeColor}/>
+  </body>
+</html>

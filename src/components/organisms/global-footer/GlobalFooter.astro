@@ -1,0 +1,68 @@
+﻿---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Logo from "@/assets/images/brand/logo.svg";
+import Logomark from "@/assets/images/brand/logomark.svg";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import { defaultLocale } from "@/utils/i18n.ts";
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const globalWebsiteConfig = (
+	await currentLocaleWebsiteConfig(Astro.currentLocale)
+).data;
+const {
+	socials: globalWebsiteSocial,
+	slogan: websiteSlogan,
+	copyright: websiteCopyright,
+} = globalWebsiteConfig.brand;
+const { navigation: globalWebsiteNavigation } = globalWebsiteConfig;
+
+const footerSections = [
+	{
+		title: t("swift_steep_lobster_push"),
+		links: globalWebsiteSocial,
+	},
+	{
+		title: t("maroon_awful_flea_twirl"),
+		links: globalWebsiteNavigation,
+	},
+];
+---
+<footer class="mb-[calc(var(--mainNav-height)_+_var(--mainNav-device-gap)_+_env(safe-area-inset-bottom))] md:mb-0 relative z-40 py-8 px-4 gap-4 bg-gradient-to-t to-90% from-primary/10 bg-background">
+  <div class="flex flex-wrap justify-between container mx-auto">
+    <div class="p-4 flex flex-col justify-between">
+      <div>
+        <a
+        data-astro-prefetch
+        title={t("funny_small_coyote_chop")}
+        href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, '')}
+        class="inline-flex items-center gap-1.5"
+        >
+          <Logo width={36} height={36} />
+          <Logomark width={110} height={32} class="h-7 w-auto" />
+        </a>
+        <p class="tracking-wider text-xs">{ websiteSlogan }</p>
+      </div>
+      <small class="max-w-prose text-muted-foreground tracking-widest" set:html={websiteCopyright}></small>
+    </div>
+
+    <!-- Footer Sections -->
+    <div class="flex flex-wrap gap-10">
+      {
+        footerSections.map(section => <div>
+        <div class="tracking-widest px-4 font-bold mb-4">
+          {section.title}
+        </div>
+        <ul>
+           {
+             section.links.map(link => <li>
+                 <a class="text-xs p-4 py-2 inline-block"
+                    href={link.url.startsWith('http') || link.url.startsWith('/') ? link.url : getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, link.url)}>{link.name}</a>
+               </li>)
+           }
+        </ul>
+      </div>)
+      }
+    </div>
+  </div>
+</footer>

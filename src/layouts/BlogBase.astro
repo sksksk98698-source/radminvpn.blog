@@ -1,0 +1,17 @@
+﻿---
+import GlobalFooter from "@/components/organisms/global-footer/GlobalFooter.astro";
+import Navbar from "@/components/organisms/global-navbar/GlobalNavbar.astro";
+import Base from "@/layouts/Base.astro";
+import type { BaseLayout } from "@/types/layouts";
+
+export interface Props extends BaseLayout {}
+---
+
+<Base {...Astro.props}>
+  <slot name="head" slot="head"/>
+  <Navbar />
+  <div class="min-h-screen">
+    <slot />
+  </div>
+  <GlobalFooter />
+</Base>

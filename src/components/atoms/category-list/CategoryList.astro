@@ -1,0 +1,34 @@
+﻿---
+import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
+import type { CategoryList } from "@/types/category-list";
+import toSnakeCase from "@/utils/toSnakeCase.ts";
+
+export interface Props extends CategoryList {}
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const { category, categoryHref } = Astro.props;
+const CategoryElement = categoryHref ? "a" : "div";
+
+const translatedCategory = (() => {
+	const snakedCategoryType = toSnakeCase(category || "");
+	const categoryI18nMethodName = `category_${snakedCategoryType}`;
+	const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+	if (categoryTranslation !== categoryI18nMethodName) {
+		return categoryTranslation;
+	}
+	// eslint-disable-next-line no-console
+	console.warn(`Category translation not found: ${category}`);
+	return category;
+})();
+---
+
+<CategoryElement
+  data-astro-prefetch
+  class="p-1.5 relative flex gap-1 mr-4 whitespace-nowrap opacity-60 hover:opacity-100"
+  {...categoryHref && {
+    href: categoryHref,
+  }}
+>
+  <span>@</span>
+  <span data-cy="category" data-pagefind-filter={`${t("swift_whole_pony_dare")}:${translatedCategory}`}>{translatedCategory}</span>
+</CategoryElement>

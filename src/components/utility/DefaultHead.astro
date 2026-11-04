@@ -1,0 +1,148 @@
+﻿---
+import { SEO } from "astro-seo";
+import ThemeManager from "@/components/utility/ThemeManager.astro";
+import type { GlobalHead } from "@/types/layouts";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+import {
+	baseUrl,
+	defaultLocale,
+	languageTags,
+	prefixDefaultLocale,
+	regionTags,
+} from "@/utils/i18n.ts";
+
+export interface Props extends GlobalHead {}
+
+const { title, description, thumbnail } = Astro.props;
+const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
+const base = import.meta.env.BASE_URL ?? "/";
+const cleanBase = base.replace(/\/$/, "");
+const siteOrigin = (Astro.site?.toString() || baseUrl).replace(/\/$/, "");
+
+const seoTitle = `${title || brand.slogan} - ${brand.name}`;
+const seoDescription = description || brand.description;
+
+const canonicalURL = new URL(Astro.url.pathname, siteOrigin).toString();
+
+const rawImageSrc = thumbnail?.src || brand.thumbnail.src;
+const resolvedImageSrc = rawImageSrc.startsWith("http")
+	? rawImageSrc
+	: new URL(`${cleanBase}${rawImageSrc}`, siteOrigin).toString();
+
+const seoImage = {
+	src: resolvedImageSrc,
+	width: thumbnail?.width ?? brand.thumbnail.width,
+	height: thumbnail?.height ?? brand.thumbnail.height,
+	alt: thumbnail?.alt ?? brand.thumbnail.alt,
+};
+
+function replaceLocaleInPath(pathname: string, targetLocale: string): string {
+	return pathname
+		.replace(
+			`${cleanBase}/${Astro.currentLocale}`,
+			`${cleanBase}/${targetLocale}`,
+		)
+		.replace(/\/?$/, "/");
+}
+---
+
+<SEO
+      title={seoTitle}
+      description={seoDescription}
+      canonical={canonicalURL}
+      openGraph={{
+        basic: {
+          title: `${seoTitle}`,
+          type: 'website',
+          image: `${seoImage.src}`,
+          url: canonicalURL,
+        },
+        optional: {
+          siteName: brand.name,
+          description: `${seoDescription}`,
+        },
+        image: {
+          type: 'image/jpeg',
+          alt: `${seoImage.alt}`,
+          width: seoImage.width,
+          height: seoImage.height,
+        },
+      }}
+      twitter={{
+        card: 'summary_large_image',
+        title: `${seoTitle}`,
+        description: `${seoDescription}`,
+        image: `${seoImage.src}`,
+        imageAlt: `${seoImage.alt}`,
+      }}
+      extend={{
+        link: [
+          // @ts-ignore
+          // Link 'sizes' property is DOMTokenList type not string
+          // https://github.com/jonasmerlin/astro-seo/issues/87
+          { rel: 'icon', href: `${base}images/brand/favicon/favicon.ico`, sizes: '32x32' },
+          { rel: 'icon', href: `${base}images/brand/favicon/logo.svg`, type: 'image/svg+xml' },
+          { rel: 'apple-touch-icon', href: `${base}images/brand/favicon/apple-touch-icon.png` },
+          { rel: 'manifest', href: `${base}manifest.webmanifest` },
+          {
+            rel: 'sitemap',
+            href: `${base}sitemap-index.xml`,
+            type: 'application/xml',
+          },
+          // Default Language Alternates
+          {
+            rel: "alternate",
+            hreflang: "x-default",
+            href: new URL(
+              replaceLocaleInPath(Astro.url.pathname, defaultLocale),
+              siteOrigin
+            ).toString()
+          },
+
+          // Language Alternates - Region
+          ...(Object.keys(regionTags) as Array<keyof typeof regionTags>).map(tag => {
+            const regionMap = {
+              zh: 'zh-tw' 
+            }
+            return ({
+            rel: "alternate",
+            hreflang: tag,
+            href: new URL(
+              replaceLocaleInPath(Astro.url.pathname, regionMap[tag]),
+              siteOrigin
+            ).toString()
+          })}),
+
+          // Language Alternates - Countries
+          ...Object.keys(languageTags).map(tag => ({
+            rel: "alternate",
+            hreflang: tag,
+            href: new URL(
+              prefixDefaultLocale
+                ? replaceLocaleInPath(Astro.url.pathname, tag)
+                : Astro.url.pathname,
+              siteOrigin
+            ).toString()
+          })),
+
+          // RSS Autodiscovery
+          {
+            rel:"alternate",
+            type:"application/rss+xml",
+            title:`${seoTitle}`,
+            href:`${base}rss.xml`
+          }
+        ],
+        meta: [
+          {
+            name: 'viewport',
+            content: 'width=device-width, initial-scale=1, viewport-fit=cover',
+          },
+          {
+            name: 'theme-color',
+            content: brand.themeColor,
+          },
+        ],
+      }}
+    />
+<ThemeManager />

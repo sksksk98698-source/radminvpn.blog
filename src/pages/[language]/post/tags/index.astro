@@ -1,0 +1,40 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+import BlogBase from "@/layouts/BlogBase.astro";
+import { sortedPostTags } from "@/utils/getPosts.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
+---
+
+<BlogBase title={t("kind_curly_javelina_aim")} description={t("sea_loud_osprey_reap", {number: sortedPostTags.length})}>
+  <Hero>
+    <Fragment slot="headline">{t("sea_loud_osprey_reap", {number: sortedPostTags.length})}</Fragment>
+  </Hero>
+  <Container>
+    <SpotlightCardsGallery>
+      {
+        sortedPostTags.map((tag) => (
+          <ul>
+            <li class="text-3xl">
+              <SpotlightCard>
+                <a data-cy="tag-link" data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)}>{tag}</a>
+              </SpotlightCard>
+            </li>
+          </ul>
+        ))
+      }
+    </SpotlightCardsGallery>
+  </Container>
+</BlogBase>

@@ -1,0 +1,96 @@
+﻿---
+import type { CollectionEntry } from "astro:content";
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import CategoryList from "@/components/atoms/category-list/CategoryList.astro";
+import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro";
+import TagList from "@/components/atoms/tag-list/TagList.astro";
+import type { CategoryList as CategoryListType } from "@/types/category-list";
+import type { TagsList } from "@/types/tag-list";
+import { defaultLocale, stripLanguageCode } from "@/utils/i18n.ts";
+
+type PostPage = CollectionEntry<"post">;
+
+type PostCard = Pick<PostPage, "id"> &
+	PostPage["data"] &
+	CategoryListType &
+	TagsList & { url?: string };
+type CustomCard = Partial<Pick<PostPage, "id">> &
+	CategoryListType &
+	TagsList & {
+		url?: string;
+		publishDate?: Date;
+		headline: string;
+		excerpt: string;
+		icon: {
+			name: string;
+			title: string;
+		};
+		themeColor: string;
+	};
+
+export interface Props {
+	post: PostCard | CustomCard;
+}
+
+const {
+	icon,
+	headline,
+	excerpt,
+	publishDate,
+	themeColor,
+	tagHrefs,
+	tags,
+	categoryHref,
+	category,
+	id,
+	url,
+} = Astro.props.post;
+---
+
+<SpotlightCard themeColor={themeColor}>
+  <article class={`flex h-full flex-col justify-between gap-8  ${icon ? 'pt-8' : ''}`}>
+    {
+      icon && (
+        <div
+          style={`background-color: ${themeColor}`}
+          class="absolute size-16 left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg flex justify-center items-center"
+        >
+          <Icon size={32} class="text-black" name={icon.name} title={icon.title} />
+        </div>
+      )
+    }
+    <div>
+      <h2 class="mb-4 text-lg font-medium">
+        {url && <a rel="nofollow" href={url}>{headline}</a>}
+        {id && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(id)}/`)}>{headline}</a>}
+        {!url && !id && headline}
+      </h2>
+      <p class="line-clamp-3 prose">{excerpt}</p>
+    </div>
+    <div class="flex flex-wrap items-center justify-between">
+      {
+        publishDate && (
+          <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
+            {publishDate
+              .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
+              .replace(/\//g, '-')}
+          </time>
+        )
+      }
+
+      <div class="flex flex-wrap">
+        {
+          category && (
+            <CategoryList {...(categoryHref && ({categoryHref}))} {category} />
+          )
+        }
+        {
+          tags && (
+            <TagList {...(tagHrefs && ({tagHrefs}))} {tags} />
+          )
+        }
+      </div>
+    </div>
+  </article>
+</SpotlightCard>

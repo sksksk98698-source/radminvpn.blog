@@ -1,0 +1,36 @@
+---
+import Container from "@/components/atoms/container/Container.astro";
+import ShortpostList from "@/components/atoms/shortpost-list/ShortpostList.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+import BlogBase from "@/layouts/BlogBase.astro";
+import { dateSortedLocaleRelatedShortposts } from "@/utils/getShortposts.ts";
+import { languages } from "@/utils/i18n.ts";
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const shortposts = dateSortedLocaleRelatedShortposts(
+	getLocale(Astro.currentLocale),
+);
+---
+
+<BlogBase title={t("sea_same_gopher_burn")} description={t("round_even_leopard_drip", {number: shortposts.length})}>
+  <Hero>
+    <Fragment slot="headline">
+      {t("round_even_leopard_drip", {number: shortposts.length})}
+    </Fragment>
+  </Hero>
+  
+  <Container>
+    <section class="px-6">
+      <h2 class="sr-only">{t("spicy_quiet_ibex_clasp")}</h2>
+      <ShortpostList shortposts={shortposts}>
+      </ShortpostList>
+    </section>
+  </Container>
+</BlogBase>

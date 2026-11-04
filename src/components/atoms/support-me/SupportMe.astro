@@ -1,0 +1,25 @@
+﻿---
+import Sidenote from "@/components/atoms/sidenote/Sidenote.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig";
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
+const githubUrl = brand.supportMe?.githubUrl;
+const linkHtml = githubUrl
+	? `<a href="${githubUrl}" target="_blank" rel="noopener noreferrer">${t("heroic_slow_albatross_soar")}</a>`
+	: "";
+---
+
+{
+	githubUrl && (
+		<Sidenote type="info">
+			<span
+				set:html={t("quiet_strict_raven_improve", {
+					blogName: brand.name,
+					link: linkHtml,
+				})}
+			/>
+		</Sidenote>
+	)
+}

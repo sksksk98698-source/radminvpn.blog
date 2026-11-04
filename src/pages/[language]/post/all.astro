@@ -1,0 +1,81 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Badge } from "@/components/atoms/badge/index.ts";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, useTranslations } from "@/i18n/i18n";
+import BlogBase from "@/layouts/BlogBase.astro";
+import {
+	dateSortedLocaleRelatedPosts,
+	sortedPostCategoryies,
+	sortedPostTags,
+} from "@/utils/getPosts.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const posts = dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale));
+const total = posts.length;
+const isFirstPage = true;
+const showBadges = isFirstPage;
+---
+
+<BlogBase 
+  title={t("still_mad_javelina_propel")} 
+  description={t("tired_game_husky_sew", {number: total})}
+>
+  <Hero>
+    {showBadges && (
+      <div slot="beforeHeadline" class="flex flex-wrap mx-0 md:mx-auto gap-4 md:gap-8">
+        <a data-cy="categories-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/categories')}>
+          <Badge>
+            <span class="flex items-center gap-2">
+              <span class="text-base mb-0.5 font-bold">@</span>
+              <span>{t("left_tame_zebra_fade", {number: sortedPostCategoryies.length})}</span>
+            </span>
+          </Badge>
+        </a>
+        <a data-cy="tags-link" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, 'post/tags')}>
+          <Badge>
+            <span class="flex items-center gap-2">
+              <span class="text-base font-bold">#</span>
+              <span>{t("mushy_swift_beaver_earn", {number: sortedPostTags.length})}</span>
+            </span>
+          </Badge>
+        </a>
+      </div>
+    )}
+    <Fragment slot="headline">
+      {t("tired_game_husky_sew", {number: total})}
+    </Fragment>
+  </Hero>
+  <Container>
+    <section>
+      <h2 class="sr-only">{t("born_full_liger_create")}</h2>
+      <SpotlightCardsGallery>
+        {
+          posts.map((post) => {
+            const { data } = post
+            return (
+            <SpotlightPostCard
+            post={{
+              categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+              tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
+                id: post.id,
+                ...data
+              }}
+            />
+          )
+          })
+        }
+      </SpotlightCardsGallery>
+    </section>
+  </Container>
+</BlogBase>

@@ -1,0 +1,15 @@
+﻿<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 140 40"
+  fill="currentColor"
+>
+  <title>Radmin VPN</title>
+  <text
+    x="2"
+    y="28"
+    font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"
+    font-weight="800"
+    font-size="22"
+    letter-spacing="0.5"
+  >RADMIN<tspan font-size="14" font-weight="700" fill="currentColor" opacity="0.65" dx="4">VPN</tspan></text>
+</svg>

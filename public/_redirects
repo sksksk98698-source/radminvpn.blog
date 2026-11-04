@@ -1,0 +1,5 @@
+/             /en/                      301
+/post/        /en/post                  301
+/post/*       /en/post/:splat           301
+/shortpost/   /en/shortpost             301
+/shortpost/*  /en/shortpost/:splat      301

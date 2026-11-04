@@ -1,0 +1,89 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Badge } from "@/components/atoms/badge/index.ts";
+import Container from "@/components/atoms/container/Container.astro";
+import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
+import SpotlightPostCard from "@/components/atoms/spotlight-post-card/SpotlightPostCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
+import BlogBase from "@/layouts/BlogBase.astro";
+import {
+	dateSortedLocaleRelatedPosts,
+	sortedPostCategoryies,
+} from "@/utils/getPosts.ts";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+import toSnakeCase from "@/utils/toSnakeCase.ts";
+
+export async function getStaticPaths() {
+	return sortedPostCategoryies.flatMap((category) =>
+		Object.keys(languages).map((language) => ({
+			params: { slug: category, language },
+			props: {
+				posts: dateSortedLocaleRelatedPosts(getLocale(language)),
+				categories: sortedPostCategoryies,
+			},
+		})),
+	);
+}
+
+const t = useTranslations(getLocale(Astro.currentLocale));
+const { slug } = Astro.params;
+const { posts, categories } = Astro.props;
+
+const avaliableCurrentCategoryPosts = posts
+	.filter((post) => post.data.category === slug)
+	.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const translatedCategory = (() => {
+	const snakedCategoryType = toSnakeCase(slug);
+	const categoryI18nMethodName = `category_${snakedCategoryType}`;
+	const categoryTranslation = t(categoryI18nMethodName as TranslationKey);
+	if (categoryTranslation !== categoryI18nMethodName) {
+		return categoryTranslation;
+	}
+	// eslint-disable-next-line no-console
+	console.warn(`Category translation not found: ${slug}`);
+	return slug;
+})();
+---
+
+<BlogBase title={`${t("grassy_smart_sheep_tickle")}${translatedCategory}`} description={t("fluffy_active_earthworm_feel")}>
+  <Hero>
+    <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
+      <Badge>
+        <a data-cy="categories-link" class="flex gap-2 items-center" href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/`)}>
+            <span class="flex items-center gap-2">
+              <span class="text-base mb-0.5 font-bold">@</span>
+              <span>{t("left_tame_zebra_fade", {number: categories.length})}
+              </span>
+            </span>
+        </a>
+      </Badge>
+    </div>
+    <Fragment slot="headline">
+      {t("grassy_smart_sheep_tickle")}<span>{translatedCategory}</span>
+    </Fragment>
+  </Hero>
+  <Container>
+      {
+        avaliableCurrentCategoryPosts.length ? <SpotlightCardsGallery>
+          {avaliableCurrentCategoryPosts.map((post) => {
+          const { data } = post 
+          return (
+            <SpotlightPostCard
+              post={{
+                categoryHref: getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/categories/${post.data.category}/`),
+                tagHrefs: post.data.tags.map((tag) => getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/tags/${tag}/`)),
+                id: post.id,
+                ...data,
+              }}
+            />
+          )
+        })}
+        </SpotlightCardsGallery> : 
+        <div class="text-center">
+          <p class="text-2xl">{t("lofty_new_gazelle_cut")}</p>
+        </div>
+      }
+  </Container>
+</BlogBase>

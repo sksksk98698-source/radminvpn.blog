@@ -1,0 +1,16 @@
+﻿---
+/**
+ * This component is for replacing mdx blockquote component
+ * mdx components document: https://mdxjs.com/table-of-components/
+ */
+import sanitizeHtml from "sanitize-html";
+
+const renderedBlockquote = await Astro.slots.render("default");
+---
+
+<blockquote
+  class="not-italic text-lg text-center bg-blockquote/10 text-blockquote-foreground border border-border p-8 rounded-3xl rounded-tl-none transition-colors"
+  set:html={sanitizeHtml(renderedBlockquote, {
+    allowedTags: ['code', 'blockquote', 'a', 'em', 'strong', 'kbd', 'cite'],
+  })}
+/>

@@ -1,0 +1,152 @@
+﻿---
+import { Skeleton } from "@/components/atoms/skeleton/index.ts";
+import { currentLocaleWebsiteConfig } from "@/utils/getWebsiteConfig.ts";
+
+const {
+	setting: { githubCommentRepo },
+} = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
+
+const hasCommentRepo = Boolean(githubCommentRepo && githubCommentRepo.trim());
+---
+
+{
+	hasCommentRepo && (
+		<>
+			<div
+				data-cy="post-comment"
+				data-pagefind-ignore="all"
+				class="comment py-8"
+				style="min-height: 367px"
+			>
+				{/* Avatar */}
+				<Skeleton
+					style="width: var(--size-avatar); height: var(--size-avatar);"
+					class="comment-avatar"
+				/>
+				{/* Info */}
+				<Skeleton
+					style="width: 237px; height: var(--height-info)"
+					class="comment-info"
+				/>
+				{/* Comment Panel */}
+				<Skeleton style="height: 196px;" class="comment-chat">
+					{/* Tabs */}
+					<Skeleton
+						style="height: 48px;"
+						class="px-2 pt-2 flex border-x-0 border-t-0 rounded-none"
+					>
+						<Skeleton class="rounded-b-none px-4 py-2 w-fit border-b-0 -mb-px">
+							<div style="width: 33px; height: 23px;" />
+						</Skeleton>
+						<Skeleton class="rounded-b-none px-4 py-2 w-fit border-b-0 -ml-px">
+							<div style="width: 47px; height: 23px;" />
+						</Skeleton>
+					</Skeleton>
+					{/* Comment textarea */}
+					<div class="px-2 py-2">
+						<Skeleton class="px-4 py-2">
+							<div style="width: 100%; height: 72px;" />
+						</Skeleton>
+					</div>
+					{/* Comment Footer */}
+					<div class="pb-8 px-2 gap-2 flex justify-between items-center">
+						<Skeleton style="width: 209px; height: 18px;" />
+						<Skeleton style="width: 95px; height: 32px;" />
+					</div>
+				</Skeleton>
+			</div>
+
+			<style is:inline>
+				.comment {
+					--size-avatar: 44px;
+					--height-info: 21px;
+					display: flex;
+					flex-direction: column;
+					gap: 1rem;
+					display: hidden;
+				}
+
+				.comment-avatar {
+					display: none;
+				}
+
+				@media (min-width: 576px) {
+					.comment {
+						display: grid;
+						grid-template-columns: var(--size-avatar) 1fr;
+						grid-template-rows: var(--height-info) 1fr;
+						grid-template-areas:
+							". info"
+							"avatar chat";
+					}
+
+					.comment-avatar {
+						grid-area: avatar;
+						display: block;
+					}
+
+					.comment-info {
+						grid-area: info;
+					}
+
+					.comment-chat {
+						grid-area: chat;
+					}
+				}
+
+				.comment[data-loaded] {
+					display: flex;
+				}
+			</style>
+
+			<script is:inline define:vars={{ repo: githubCommentRepo }}>
+				function loadUtterancesScript() {
+					return new Promise((resolve, reject) => {
+						const utteranceThemeMap = {
+							dark: "github-dark",
+							light: "github-light",
+						};
+
+						const theme =
+							window.theme.getTheme() === "auto"
+								? utteranceThemeMap[window.theme.getSystemTheme()]
+								: utteranceThemeMap[window.theme.getTheme()];
+
+						const script = document.createElement("script");
+						script.src = "https://utteranc.es/client.js";
+						script.setAttribute("repo", repo);
+						script.setAttribute("issue-term", "title");
+						script.setAttribute("theme", theme);
+						script.setAttribute("crossorigin", "anonymous");
+						script.setAttribute("async", "");
+						script.onload = () => resolve(script);
+						script.onerror = reject;
+					});
+				}
+
+				function miniumTimer(ms) {
+					return new Promise((resolve) => {
+						setTimeout(resolve, ms);
+					});
+				}
+
+				async function generateUtterance() {
+					const comment = document.querySelector(".comment");
+					if (!comment) return;
+					const [script] = await Promise.all([
+						loadUtterancesScript(),
+						miniumTimer(300),
+					]);
+					comment.innerHTML = "";
+					comment.appendChild(script);
+					comment.setAttribute("data-loaded", "true");
+				}
+
+				document.addEventListener("theme-changed", () => {
+					generateUtterance();
+				});
+				generateUtterance();
+			</script>
+		</>
+	)
+}

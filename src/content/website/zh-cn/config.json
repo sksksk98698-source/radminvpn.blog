@@ -1,0 +1,54 @@
+{
+  "setting": {
+    "projectUpdateBadgeUrl": "",
+    "githubCommentRepo": ""
+  },
+  "brand": {
+    "name": "Radmin VPN 博客",
+    "slogan": "安全、高速且完全免费的虚拟局域网联机指南与技术洞察",
+    "description": "探索 Radmin VPN 的完整使用教程、游戏局域网联机配置指南、远程组网技巧与网络安全洞察。",
+    "themeColor": "#0d1b2a",
+    "thumbnail": {
+      "width": 1200,
+      "height": 630,
+      "src": "/images/brand/default-og.jpg",
+      "alt": "Radmin VPN 博客 - 局域网联机与远程组网指南"
+    },
+    "copyright": "© 2026 Radmin VPN 博客。保留所有权利。",
+    "author": {
+      "name": "Radmin VPN 技术团队",
+      "url": "https://radminvpn.blog/zh-cn/"
+    },
+    "publisher": {
+      "name": "Radmin VPN 博客",
+      "url": "https://radminvpn.blog/zh-cn/"
+    },
+    "supportMe": {
+      "githubUrl": ""
+    },
+    "socials": [
+      {
+        "name": "RSS",
+        "iconName": "simple-icons:rss",
+        "url": "https://radminvpn.blog/rss.xml"
+      }
+    ]
+  },
+  "navigation": [
+    {
+      "iconName": "material-symbols:home-outline-rounded",
+      "name": "首页",
+      "url": ""
+    },
+    {
+      "iconName": "material-symbols:article-outline-rounded",
+      "name": "文章",
+      "url": "post"
+    },
+    {
+      "iconName": "material-symbols:quick-phrases-rounded",
+      "name": "简报",
+      "url": "shortpost"
+    }
+  ]
+}

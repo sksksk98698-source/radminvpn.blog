@@ -1,0 +1,54 @@
+{
+  "setting": {
+    "projectUpdateBadgeUrl": "",
+    "githubCommentRepo": ""
+  },
+  "brand": {
+    "name": "Radmin VPN 部落格",
+    "slogan": "安全、高速且完全免費的虛擬區域網路連線教學與技術洞見",
+    "description": "探索 Radmin VPN 的完整教學、遊戲區域網路連線設定、遠端組網技巧與網路安全洞見。",
+    "themeColor": "#0d1b2a",
+    "thumbnail": {
+      "width": 1200,
+      "height": 630,
+      "src": "/images/brand/default-og.jpg",
+      "alt": "Radmin VPN 部落格 - 區域網路連線與遠端組網教學"
+    },
+    "copyright": "© 2026 Radmin VPN 部落格。保留所有權利。",
+    "author": {
+      "name": "Radmin VPN 技術團隊",
+      "url": "https://radminvpn.blog/zh-tw/"
+    },
+    "publisher": {
+      "name": "Radmin VPN 部落格",
+      "url": "https://radminvpn.blog/zh-tw/"
+    },
+    "supportMe": {
+      "githubUrl": ""
+    },
+    "socials": [
+      {
+        "name": "RSS",
+        "iconName": "simple-icons:rss",
+        "url": "https://radminvpn.blog/rss.xml"
+      }
+    ]
+  },
+  "navigation": [
+    {
+      "iconName": "material-symbols:home-outline-rounded",
+      "name": "首頁",
+      "url": ""
+    },
+    {
+      "iconName": "material-symbols:article-outline-rounded",
+      "name": "文章",
+      "url": "post"
+    },
+    {
+      "iconName": "material-symbols:quick-phrases-rounded",
+      "name": "速記",
+      "url": "shortpost"
+    }
+  ]
+}

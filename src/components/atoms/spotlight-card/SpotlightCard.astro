@@ -1,0 +1,120 @@
+﻿---
+import type { HTMLAttributes } from "astro/types";
+import { hexToRgba } from "@/utils/hexToRgba.ts";
+
+export interface Props extends HTMLAttributes<"div"> {
+	themeColor?: string;
+	class?: string;
+}
+
+const { themeColor, class: className, ...attrs } = Astro.props;
+const cardDefaultBorderColor = themeColor
+	? hexToRgba(themeColor, 0.2)
+	: "color-mix(in oklch, var(--primary) 20%, transparent)";
+const cardBorderColor = themeColor
+	? hexToRgba(themeColor, 0.6)
+	: "color-mix(in oklch, var(--primary) 60%, transparent)";
+const cardFillColor = themeColor
+	? hexToRgba(themeColor, 1)
+	: "color-mix(in oklch, var(--primary) 100%, transparent)";
+const cardShadowColor = themeColor
+	? hexToRgba(themeColor, 0.1)
+	: "color-mix(in oklch, var(--primary) 5%, transparent)";
+const cardHoverFillColor = themeColor
+	? hexToRgba(themeColor, 0.1)
+	: "color-mix(in oklch, var(--primary) 10%, transparent)";
+const cardHoverActiveColor = themeColor
+	? hexToRgba(themeColor, 0.2)
+	: "color-mix(in oklch, var(--primary) 20%, transparent)";
+const cardAnimationCurve = "ease-[cubic-bezier(0.30,0.70,0.40,0.10)]";
+const cardActiveDuraction = "active:duration-[34ms]";
+const borderRadius = "8px";
+---
+
+<div
+  data-spotlight-card
+  style="border-radius: var(--borderRadius)"
+  class="card transform hover:-translate-y-1 active:-translate-y-0 transition-transform z-0 relative flex"
+  class:list={[
+    className,
+    cardAnimationCurve,
+    cardActiveDuraction
+  ]}
+  {...attrs}
+>
+    <div class="card-content bg-background/70 text-card-foreground group">
+      <div 
+      style="border-radius: var(--borderRadius)"
+      class="group-hover:bg-[var(--cardHoverFillColor)] group-active:bg-[var(--cardHoverActiveColor)] p-6 h-full transition-colors"
+      class:list={[
+        cardActiveDuraction
+      ]}
+      >
+        <slot />
+      </div>
+    </div>
+</div>
+
+{/* eslint-disable-next-line astro/no-unused-define-vars-in-style */}
+<style define:vars={{ cardBorderColor, cardFillColor, cardDefaultBorderColor, cardShadowColor, cardHoverFillColor, cardHoverActiveColor, borderRadius }}>
+
+  .card {
+    --border-width: 2px;
+    --inner-border-radius: calc(var(--borderRadius) - var(--border-width));
+    background-color: color-mix(in srgb, var(--cardDefaultBorderColor), black 5%);
+
+  }
+
+  html.dark .card {
+    --border-width: 1px;
+    background-color: var(--cardDefaultBorderColor);
+
+  }
+  
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card:hover {
+    box-shadow: 0 0 30px 10px var(--cardShadowColor);
+  }
+  
+  .card::before,
+  .card::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    opacity: 0.2;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    border-radius: inherit;
+    transition: opacity 500ms;
+  }
+  
+  .card::before {
+    background: radial-gradient(
+      800px circle at var(--mouse-x) var(--mouse-y), 
+      var(--cardFillColor),
+      transparent 40%
+    );
+    z-index: 2;
+  }
+  
+  .card::after {  
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y), 
+      var(--cardBorderColor),
+      transparent 40%
+    );
+    z-index: 1;
+  }
+  
+  .card > .card-content {
+    border-radius: var(--inner-border-radius);
+    margin: var(--border-width);
+    width: calc(100% - var(--border-width) * 2);
+    height: calc(100% - var(--border-width) * 2);
+    z-index: 2;
+  }
+  </style>
