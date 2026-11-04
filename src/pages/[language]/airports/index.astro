@@ -68,23 +68,23 @@ const jsonLd = {
       <div class="mb-8 p-4 rounded-2xl bg-card border border-border flex flex-wrap items-center justify-between gap-4">
         <div class="flex flex-wrap items-center gap-2">
           <a href="#all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-primary-foreground shadow-sm">
-            全部 ({airportBrands.length})
+            {isZh ? "全部" : "All"} ({airportBrands.length})
           </a>
           <a href={getRelativeLocaleUrl(locale, "/ranking/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition">
-            🏆 Top 10 推荐榜
+            🏆 {isZh ? "Top 10 推荐榜" : "Top 10 Picks"}
           </a>
           <a href={getRelativeLocaleUrl(locale, "/speedtest/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition flex items-center gap-1">
             <Icon name="material-symbols:speed-outline-rounded" size={14} class="text-emerald-500" />
-            <span>含实测大图 ({speedtestedAirports.length})</span>
+            <span>{isZh ? "含实测大图" : "With Proofs"} ({speedtestedAirports.length})</span>
           </a>
           <a href={getRelativeLocaleUrl(locale, "/clients/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition">
-            📱 客户端配置
+            📱 {isZh ? "客户端配置" : "Clients Hub"}
           </a>
         </div>
 
         <div class="text-xs text-muted-foreground flex items-center gap-1">
           <Icon name="material-symbols:verified-outline-rounded" class="text-primary" size={16} />
-          <span>第一主推: <strong class="text-primary">{featuredAirport.name}</strong>（优惠码: {featuredAirport.couponCode}）</span>
+          <span>{isZh ? "第一主推:" : "Top Pick:"} <strong class="text-primary">{featuredAirport.name}</strong>（{isZh ? "优惠码:" : "Code:"} {featuredAirport.couponCode}）</span>
         </div>
       </div>
 
@@ -92,8 +92,8 @@ const jsonLd = {
       <div class="mb-10 p-4 rounded-xl bg-muted/40 border border-border/80 text-xs text-muted-foreground leading-relaxed flex items-start gap-2.5">
         <Icon name="material-symbols:shield-outline" class="text-primary shrink-0 mt-0.5" size={18} />
         <div>
-          <strong class="text-foreground">合规透明度提示：</strong>
-          本页面收录的注册链接包含合作推广标识（统一规范 `rel="nofollow sponsored noopener"`）。若您通过链接注册购买，本站可能会获得少量维护佣金，但这绝不会增加您的实际支付成本。所有节点测速与流媒体解锁图均为标注时间点的真实实测证据，不编造虚假数据。
+          <strong class="text-foreground">{isZh ? "合规透明度提示：" : "Affiliate Disclosure: "}</strong>
+          {isZh ? "本页面收录的注册链接包含合作推广标识（统一规范 `rel=\"nofollow sponsored noopener\"`）。若您通过链接注册购买，本站可能会获得少量维护佣金，但这绝不会增加您的实际支付成本。所有节点测速与流媒体解锁图均为标注时间点的真实实测证据，不编造虚假数据。" : "Links on this directory contain compliant affiliate identifiers (rel=\"nofollow sponsored noopener\"). We may receive a small commission if you subscribe, at zero extra cost to you. Benchmark proofs are authentic captures without modification."}
         </div>
       </div>
 

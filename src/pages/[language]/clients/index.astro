@@ -49,10 +49,10 @@ const description = isZh
       <!-- Fast Recommendation Box -->
       <section class="mb-12 p-6 rounded-2xl bg-gradient-to-r from-primary/10 via-background to-card border border-primary/30 flex flex-wrap items-center justify-between gap-4">
         <div class="max-w-xl">
-          <div class="text-xs font-bold text-primary mb-1">新手小白免折腾建议</div>
-          <h3 class="text-lg font-black text-foreground">不想研究复杂的客户端订阅配置？</h3>
+          <div class="text-xs font-bold text-primary mb-1">{isZh ? "新手小白免折腾建议" : "Beginner Tip"}</div>
+          <h3 class="text-lg font-black text-foreground">{isZh ? "不想研究复杂的客户端订阅配置？" : "Prefer Zero-Configuration Proxy Access?"}</h3>
           <p class="text-xs text-muted-foreground mt-1">
-            推荐使用 <strong>{featuredAirport.name}</strong>，不仅提供 Windows、macOS、Android 自研一键登录客户端，同时也完整支持第三方 Clash、Shadowrocket 订阅链接。
+            {isZh ? `推荐使用 ${featuredAirport.name}，不仅提供 Windows、macOS、Android 自研一键登录客户端，同时也完整支持第三方 Clash、Shadowrocket 订阅链接。` : `We recommend ${featuredAirport.name}, offering custom one-click login clients for Windows, macOS, Android, as well as universal Clash & Shadowrocket subscriptions.`}
           </p>
         </div>
         <a
@@ -61,7 +61,7 @@ const description = isZh
           rel="nofollow sponsored noopener"
           class="px-5 py-2.5 rounded-xl text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition shadow-sm flex items-center gap-1.5 whitespace-nowrap"
         >
-          <span>查看光速云自研客户端</span>
+          <span>{isZh ? "查看光速云自研客户端" : "View Custom Clients"}</span>
           <Icon name="material-symbols:open-in-new-rounded" size={14} />
         </a>
       </section>
@@ -74,11 +74,11 @@ const description = isZh
               <div class="flex items-start justify-between gap-3 mb-3">
                 <div>
                   <h3 class="text-xl font-bold text-foreground">{client.name}</h3>
-                  <div class="text-xs text-muted-foreground mt-0.5">核心架构: <code class="text-primary">{client.kernel}</code></div>
+                  <div class="text-xs text-muted-foreground mt-0.5">{isZh ? "核心架构:" : "Kernel:"} <code class="text-primary">{client.kernel}</code></div>
                 </div>
                 {client.isPopular && (
                   <span class="px-2 py-0.5 rounded text-[11px] font-bold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
-                    首选推荐
+                    {isZh ? "首选推荐" : "Recommended"}
                   </span>
                 )}
               </div>
@@ -103,19 +103,19 @@ const description = isZh
               </ul>
 
               <p class="text-xs text-muted-foreground bg-muted/40 p-2.5 rounded-lg border border-border/60 mb-6">
-                <strong>定位建议：</strong> {client.recommendedFor}
+                <strong>{isZh ? "定位建议：" : "Target: "}</strong> {client.recommendedFor}
               </p>
             </div>
 
             <div class="flex items-center justify-between pt-3 border-t border-border">
-              <span class="text-xs text-muted-foreground">渠道: {client.officialSource}</span>
+              <span class="text-xs text-muted-foreground">{isZh ? "渠道:" : "Source:"} {client.officialSource}</span>
               <a
                 href={client.downloadUrl}
                 target="_blank"
                 rel="noopener"
                 class="inline-flex items-center gap-1 px-4 py-2 rounded-xl text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition shadow-sm"
               >
-                <span>官方获取</span>
+                <span>{isZh ? "官方获取" : "Get App"}</span>
                 <Icon name="material-symbols:download-rounded" size={14} />
               </a>
             </div>
@@ -127,7 +127,7 @@ const description = isZh
       <section class="p-6 sm:p-8 rounded-2xl bg-card border border-border">
         <h2 class="text-xl font-bold mb-4 flex items-center gap-2">
           <Icon name="material-symbols:menu-book-outline-rounded" class="text-primary" size={22} />
-          <span>三步极速导入机场订阅通用教程</span>
+          <span>{isZh ? "三步极速导入机场订阅通用教程" : "3-Step Universal Subscription Setup Guide"}</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs sm:text-sm">
           <div class="p-4 rounded-xl bg-muted/30 border border-border/80">

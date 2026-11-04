@@ -51,13 +51,13 @@ const description = isZh
       <div class="mb-10 p-6 rounded-2xl bg-card border border-border shadow-sm text-xs sm:text-sm text-muted-foreground leading-relaxed">
         <h3 class="text-base font-bold text-foreground mb-2 flex items-center gap-2">
           <Icon name="material-symbols:science-outline" class="text-primary" size={20} />
-          <span>实测方法与证据说明规范</span>
+          <span>{isZh ? "实测方法与证据说明规范" : "Testing Methodology & Evidence Standards"}</span>
         </h3>
         <p class="mb-2">
-          本专题汇聚的 17 份测速截图于 <strong>2026-08-11 晚高峰时段</strong> 使用专业 MAI-TEST-BOT 测速引擎采集。测试覆盖香港、日本、新加坡、台湾、美国等核心枢纽节点。
+          {isZh ? "本专题汇聚的 17 份测速截图于 2026-08-11 晚高峰时段 使用专业 MAI-TEST-BOT 测速引擎采集。测试覆盖香港、日本、新加坡、台湾、美国等核心枢纽节点。" : "All 17 speedtest captures were recorded during peak hours on 2026-08-11 using the MAI-TEST-BOT engine across Asia-Pacific and US gateways."}
         </p>
         <p class="text-[11px] text-muted-foreground border-t border-border pt-2 mt-2">
-          * 单日实测快照仅能反映当次测试网络环境，不可单独推断长期可用率。建议优先挑选支持自研客户端一键测速或提供短期月付方案的服务商。
+          {isZh ? "* 单日实测快照仅能反映当次测试网络环境，不可单独推断长期可用率。建议优先挑选支持自研客户端一键测速或提供短期月付方案的服务商。" : "* Single-day benchmarks represent network conditions at the time of testing. We recommend providers offering monthly billing or integrated in-app speed tests."}
         </p>
       </div>
 
@@ -89,14 +89,14 @@ const description = isZh
                   rel="nofollow sponsored noopener"
                   class="px-4 py-1.5 rounded-lg text-xs font-semibold bg-primary text-primary-foreground hover:bg-primary/90 transition flex items-center gap-1"
                 >
-                  <span>直达官网</span>
+                  <span>{isZh ? "直达官网" : "Official Website"}</span>
                   <Icon name="material-symbols:open-in-new-rounded" size={13} />
                 </a>
                 <a
                   href={getRelativeLocaleUrl(locale, `/airports/${brand.id}/`)}
                   class="px-3 py-1.5 rounded-lg text-xs font-medium border border-border hover:bg-muted text-foreground transition"
                 >
-                  查看完整测评
+                  {isZh ? "查看完整测评" : "Full Review"}
                 </a>
               </div>
             </div>

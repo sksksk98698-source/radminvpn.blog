@@ -113,11 +113,11 @@ const jsonLd = {
     <main class="py-8 sm:py-12 max-w-4xl mx-auto">
       <!-- Breadcrumb -->
       <nav class="flex items-center gap-2 text-xs text-muted-foreground mb-8">
-        <a href={getRelativeLocaleUrl(locale, "")} class="hover:text-foreground">首页</a>
+        <a href={getRelativeLocaleUrl(locale, "")} class="hover:text-foreground">{isZh ? "首页" : "Home"}</a>
         <span>/</span>
-        <a href={getRelativeLocaleUrl(locale, "/airports/")} class="hover:text-foreground">机场品牌库</a>
+        <a href={getRelativeLocaleUrl(locale, "/airports/")} class="hover:text-foreground">{isZh ? "机场品牌库" : "Airports"}</a>
         <span>/</span>
-        <span class="text-foreground font-medium">{brand.name} 测评</span>
+        <span class="text-foreground font-medium">{isZh ? `${brand.name} 测评` : `${brand.name} Review`}</span>
       </nav>
 
       <!-- Header Section -->
@@ -128,14 +128,14 @@ const jsonLd = {
               #{brand.rank}
             </span>
             <h1 class="text-3xl sm:text-5xl font-black tracking-tight text-foreground">
-              {brand.name} 深度测评与使用指南
+              {isZh ? `${brand.name} 深度测评与使用指南` : `${brand.name} Review & Setup Guide`}
             </h1>
           </div>
 
           <div class="flex items-center gap-2">
             {brand.couponCode && (
               <span class="px-3 py-1 rounded-lg text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                专属优惠码: {brand.couponCode}
+                {isZh ? "专属优惠码" : "Code"}: {brand.couponCode}
               </span>
             )}
             <span class="px-3 py-1 rounded-lg text-xs font-semibold bg-primary/10 text-primary border border-primary/20">
@@ -153,28 +153,28 @@ const jsonLd = {
       <section class="mb-10 p-6 rounded-2xl bg-gradient-to-br from-primary/10 via-background to-card border border-primary/30 shadow-sm">
         <h2 class="text-lg font-bold text-foreground mb-3 flex items-center gap-2">
           <Icon name="material-symbols:verified-outline-rounded" class="text-primary" size={20} />
-          <span>【实测速评结论与核心参数】</span>
+          <span>{isZh ? "【实测速评结论与核心参数】" : "[Benchmark Summary & Key Specs]"}</span>
         </h2>
         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs mb-4">
           <div class="p-3 rounded-xl bg-card border border-border">
-            <div class="text-muted-foreground">线路类型</div>
+            <div class="text-muted-foreground">{isZh ? "线路类型" : "Network Type"}</div>
             <div class="font-bold text-foreground mt-1">{brand.lineTypes.join(" + ")}</div>
           </div>
           <div class="p-3 rounded-xl bg-card border border-border">
-            <div class="text-muted-foreground">核心协议</div>
+            <div class="text-muted-foreground">{isZh ? "核心协议" : "Protocols"}</div>
             <div class="font-bold text-foreground mt-1">{brand.protocols.join(" / ")}</div>
           </div>
           <div class="p-3 rounded-xl bg-card border border-border">
-            <div class="text-muted-foreground">客户端支持</div>
-            <div class="font-bold text-foreground mt-1">{brand.clientSupport.customClient ? "自研客户端 + 通用订阅" : "支持主流第三方订阅"}</div>
+            <div class="text-muted-foreground">{isZh ? "客户端支持" : "Client Support"}</div>
+            <div class="font-bold text-foreground mt-1">{brand.clientSupport.customClient ? (isZh ? "自研客户端 + 通用订阅" : "Custom App + Generic Sub") : (isZh ? "支持主流第三方订阅" : "Third-party Subs")}</div>
           </div>
           <div class="p-3 rounded-xl bg-card border border-border">
-            <div class="text-muted-foreground">入门资费</div>
+            <div class="text-muted-foreground">{isZh ? "入门资费" : "Starting Price"}</div>
             <div class="font-bold text-primary mt-1">{brand.startingPrice}</div>
           </div>
         </div>
         <p class="text-xs text-muted-foreground leading-relaxed">
-          <strong>核心特征：</strong> {brand.uniqueSellingPoint}。适合需要稳定访问外网工作、跨境电商、AI 研发与海外流媒体追剧的用户。
+          <strong>{isZh ? "核心特征：" : "Highlights: "}</strong> {brand.uniqueSellingPoint}
         </p>
       </section>
 
@@ -183,7 +183,7 @@ const jsonLd = {
         <section class="mb-10">
           <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
             <Icon name="material-symbols:speed-outline-rounded" class="text-emerald-500" size={24} />
-            <span>晚高峰节点测速真实证据</span>
+            <span>{isZh ? "晚高峰节点测速真实证据" : "Peak Hours Speedtest Evidence"}</span>
           </h2>
           <SpeedtestViewer speedtest={brand.speedtest} brandName={brand.name} />
         </section>
@@ -194,7 +194,7 @@ const jsonLd = {
         <section class="mb-10">
           <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
             <Icon name="material-symbols:smart-display-outline-rounded" class="text-primary" size={24} />
-            <span>流媒体与 ChatGPT 原生解锁实测图集</span>
+            <span>{isZh ? "流媒体与 ChatGPT 原生解锁实测图集" : "Streaming & AI Unlock Verification"}</span>
           </h2>
           <UnlockGallery images={brand.unlockImages} brandName={brand.name} />
         </section>
@@ -204,17 +204,17 @@ const jsonLd = {
       <section class="mb-10">
         <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
           <Icon name="material-symbols:payments-outline-rounded" class="text-primary" size={24} />
-          <span>套餐方案与价格体系</span>
+          <span>{isZh ? "套餐方案与价格体系" : "Plans & Packages"}</span>
         </h2>
         <div class="overflow-x-auto rounded-xl border border-border">
           <table class="w-full text-left text-xs sm:text-sm">
             <thead class="bg-muted/50 border-b border-border text-muted-foreground">
               <tr>
-                <th class="p-3.5">套餐名称</th>
-                <th class="p-3.5">计费价格</th>
-                <th class="p-3.5">高速流量</th>
-                <th class="p-3.5">计费周期</th>
-                <th class="p-3.5 text-right">订购建议</th>
+                <th class="p-3.5">{isZh ? "套餐名称" : "Plan"}</th>
+                <th class="p-3.5">{isZh ? "计费价格" : "Price"}</th>
+                <th class="p-3.5">{isZh ? "高速流量" : "Bandwidth"}</th>
+                <th class="p-3.5">{isZh ? "计费周期" : "Period"}</th>
+                <th class="p-3.5 text-right">{isZh ? "订购建议" : "Action"}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-border/60">
@@ -222,7 +222,7 @@ const jsonLd = {
                 <tr class={pkg.isPopular ? "bg-primary/5 font-medium" : ""}>
                   <td class="p-3.5 font-bold flex items-center gap-1.5">
                     {pkg.name}
-                    {pkg.isPopular && <span class="px-1.5 py-0.5 rounded text-[10px] bg-primary text-primary-foreground font-semibold">推荐</span>}
+                    {pkg.isPopular && <span class="px-1.5 py-0.5 rounded text-[10px] bg-primary text-primary-foreground font-semibold">{isZh ? "推荐" : "Popular"}</span>}
                   </td>
                   <td class="p-3.5 text-primary font-bold">{pkg.price}</td>
                   <td class="p-3.5">{pkg.traffic}</td>
@@ -234,7 +234,7 @@ const jsonLd = {
                       rel="nofollow sponsored noopener"
                       class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs bg-primary text-primary-foreground hover:bg-primary/90 transition"
                     >
-                      <span>前往订购</span>
+                      <span>{isZh ? "前往订购" : "Order"}</span>
                       <Icon name="material-symbols:open-in-new-rounded" size={12} />
                     </a>
                   </td>
@@ -250,7 +250,7 @@ const jsonLd = {
         <div class="p-5 rounded-2xl bg-card border border-border">
           <h3 class="text-base font-bold text-foreground mb-3 flex items-center gap-2">
             <Icon name="material-symbols:check-circle-outline-rounded" class="text-emerald-500" size={20} />
-            <span>核心优势 (Pros)</span>
+            <span>{isZh ? "核心优势 (Pros)" : "Pros & Advantages"}</span>
           </h3>
           <ul class="space-y-2 text-xs sm:text-sm text-muted-foreground">
             {brand.pros.map((pro) => (
@@ -265,7 +265,7 @@ const jsonLd = {
         <div class="p-5 rounded-2xl bg-card border border-border">
           <h3 class="text-base font-bold text-foreground mb-3 flex items-center gap-2">
             <Icon name="material-symbols:warning-outline-rounded" class="text-amber-500" size={20} />
-            <span>注意事项与局限 (Cons)</span>
+            <span>{isZh ? "注意事项与局限 (Cons)" : "Cons & Limitations"}</span>
           </h3>
           <ul class="space-y-2 text-xs sm:text-sm text-muted-foreground">
             {brand.cons.map((con) => (
@@ -282,11 +282,11 @@ const jsonLd = {
       <section class="mb-10 p-6 rounded-2xl bg-card border border-border">
         <h3 class="text-lg font-bold mb-3 flex items-center gap-2">
           <Icon name="material-symbols:group-outline-rounded" class="text-primary" size={20} />
-          <span>人群画像：适合谁与不适合谁</span>
+          <span>{isZh ? "人群画像：适合谁与不适合谁" : "Target Audience Analysis"}</span>
         </h3>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
           <div>
-            <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-2">适合人群：</div>
+            <div class="font-bold text-emerald-600 dark:text-emerald-400 mb-2">{isZh ? "适合人群：" : "Recommended for:"}</div>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
               {brand.targetAudience.map((aud) => (
                 <li>{aud}</li>
@@ -294,7 +294,7 @@ const jsonLd = {
             </ul>
           </div>
           <div>
-            <div class="font-bold text-rose-500 mb-2">不适合人群：</div>
+            <div class="font-bold text-rose-500 mb-2">{isZh ? "不适合人群：" : "Not recommended for:"}</div>
             <ul class="list-disc list-inside space-y-1 text-muted-foreground">
               {brand.notSuitableFor.map((aud) => (
                 <li>{aud}</li>
@@ -308,7 +308,7 @@ const jsonLd = {
       <section class="mb-12">
         <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
           <Icon name="material-symbols:quiz-outline-rounded" class="text-primary" size={24} />
-          <span>常见问题与使用答疑 (FAQ)</span>
+          <span>{isZh ? "常见问题与使用答疑 (FAQ)" : "Frequently Asked Questions (FAQ)"}</span>
         </h2>
         <div class="space-y-3">
           {brand.faq.map((item) => (
@@ -323,10 +323,10 @@ const jsonLd = {
       <!-- Sticky / Final CTA Card -->
       <section class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-primary/20 via-blue-600/10 to-teal-400/10 border border-primary/40 shadow-lg text-center">
         <h3 class="text-xl sm:text-2xl font-extrabold text-foreground mb-2">
-          即刻开启 {brand.name} 高速网络体验
+          {isZh ? `即刻开启 ${brand.name} 高速网络体验` : `Experience High-Speed Connection with ${brand.name}`}
         </h3>
         <p class="text-xs sm:text-sm text-muted-foreground max-w-lg mx-auto mb-6">
-          专线低延迟节点，支持多设备通用订阅导入。使用专属优惠码结算立享优惠折扣。
+          {isZh ? "专线低延迟节点，支持多设备通用订阅导入。使用专属优惠码结算立享优惠折扣。" : "Low-latency IEPL nodes with full client support. Apply promo code at checkout for maximum discounts."}
         </p>
         <div class="flex flex-wrap items-center justify-center gap-4">
           <a
@@ -335,18 +335,18 @@ const jsonLd = {
             rel="nofollow sponsored noopener"
             class="px-6 py-3 rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition flex items-center gap-2"
           >
-            <span>访问 {brand.name} 官方网站</span>
+            <span>{isZh ? `访问 ${brand.name} 官方网站` : `Visit ${brand.name} Official Website`}</span>
             <Icon name="material-symbols:open-in-new-rounded" size={16} />
           </a>
           <a
             href={getRelativeLocaleUrl(locale, "/airports/")}
             class="px-5 py-3 rounded-xl text-sm font-semibold border border-border hover:bg-muted text-foreground transition"
           >
-            返回品牌库全览
+            {isZh ? "返回品牌库全览" : "Back to Directory"}
           </a>
         </div>
         <div class="text-[11px] text-muted-foreground mt-4">
-          含推广标识 · 优惠与测速基于标注日期真实资料 · 支付价格以官网最终结算为准
+          {isZh ? "含推广标识 · 优惠与测速基于标注日期真实资料 · 支付价格以官网最终结算为准" : "Contains sponsored affiliate link. Tested on verified date. Prices subject to final official checkout."}
         </div>
       </section>
     </main>

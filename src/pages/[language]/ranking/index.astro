@@ -55,7 +55,7 @@ const jsonLd = {
         {isZh ? "2026 年度机场推荐排行榜 Top 10" : "Top 10 Proxy Ranking 2026"}
       </h1>
       <p class="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-        综合线路架构（IEPL/IPLC）、晚高峰延迟丢包率、流媒体及 ChatGPT 解锁能力、性价比与客服运维响应速度全面横评。
+        {isZh ? "综合线路架构（IEPL/IPLC）、晚高峰延迟丢包率、流媒体及 ChatGPT 解锁能力、性价比与客服运维响应速度全面横评。" : "Comprehensive benchmark comparing IEPL lines, peak latency, packet loss, streaming unlock, and pricing."}
       </p>
     </div>
   </Hero>
@@ -66,7 +66,7 @@ const jsonLd = {
       <section class="mb-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/15 via-background to-card border-2 border-primary/50 shadow-[0_0_35px_-5px_rgba(58,134,255,0.3)] relative overflow-hidden">
         <div class="absolute -top-3 left-8 px-4 py-1 rounded-full text-xs font-black bg-primary text-primary-foreground shadow-md flex items-center gap-1">
           <Icon name="material-symbols:award-star-outline-rounded" size={16} />
-          <span>🏆 年度综合总冠军 · 第一主推品牌</span>
+          <span>{isZh ? "🏆 年度综合总冠军 · 第一主推品牌" : "🏆 Best Choice · #1 Pick"}</span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center mt-2">
@@ -76,18 +76,18 @@ const jsonLd = {
                 1. {featuredAirport.name}
               </h2>
               <span class="px-3 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
-                专属码: {featuredAirport.couponCode}
+                {isZh ? "专属码:" : "Code:"} {featuredAirport.couponCode}
               </span>
             </div>
 
             <p class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
-              <strong>双专线架构：</strong> IEPL专线 + 企业级内网专线。2020年稳定运营至今，全平台自研客户端一键登录，并完美支持 Clash、Shadowrocket、v2rayN 通用订阅。实测解锁 Netflix 4K、TikTok 跨境电商直播与 ChatGPT。
+              <strong>{isZh ? "双专线架构：" : "Dual-Line Architecture: "}</strong> {isZh ? "IEPL专线 + 企业级内网专线。2020年稳定运营至今，全平台自研客户端一键登录，并完美支持 Clash、Shadowrocket、v2rayN 通用订阅。实测解锁 Netflix 4K、TikTok 跨境电商直播与 ChatGPT。" : "IEPL + Enterprise Intranet lines. In operation since 2020 with custom clients and universal Clash/Shadowrocket subscription support."}
             </p>
 
             <div class="flex flex-wrap gap-2 text-xs mb-6">
-              <span class="px-3 py-1 rounded-lg bg-primary/10 text-primary font-bold">折合约 8 元/月起</span>
-              <span class="px-3 py-1 rounded-lg bg-muted text-foreground">致敬斯诺克 147 元永久 247GB</span>
-              <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 font-semibold">附 5 张真实解锁实测图</span>
+              <span class="px-3 py-1 rounded-lg bg-primary/10 text-primary font-bold">{isZh ? "折合约 8 元/月起" : "From ~¥8/mo"}</span>
+              <span class="px-3 py-1 rounded-lg bg-muted text-foreground">{isZh ? "致敬斯诺克 147 元永久 247GB" : "147GB Lifetime Plan"}</span>
+              <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 font-semibold">{isZh ? "附 5 张真实解锁实测图" : "5 Unlock Proofs Included"}</span>
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
@@ -97,39 +97,39 @@ const jsonLd = {
                 rel="nofollow sponsored noopener"
                 class="px-6 py-3 rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition flex items-center gap-2"
               >
-                <span>立即直达光速云官网</span>
+                <span>{isZh ? "立即直达光速云官网" : "Visit Guangsu Cloud Official"}</span>
                 <Icon name="material-symbols:open-in-new-rounded" size={16} />
               </a>
               <a
                 href={getRelativeLocaleUrl(locale, `/airports/${featuredAirport.id}/`)}
                 class="px-5 py-3 rounded-xl text-sm font-semibold border border-border hover:bg-muted text-foreground transition"
               >
-                查看深度评测与测速报告
+                {isZh ? "查看深度评测与测速报告" : "Full Review & Proofs"}
               </a>
             </div>
           </div>
 
           <div class="p-5 rounded-2xl bg-card border border-border/80 text-xs space-y-3">
-            <div class="font-bold text-foreground text-sm border-b border-border pb-2">光速云关键评测指标</div>
+            <div class="font-bold text-foreground text-sm border-b border-border pb-2">{isZh ? "光速云关键评测指标" : "Key Benchmark Specs"}</div>
             <div class="flex justify-between">
-              <span class="text-muted-foreground">运营时间</span>
-              <span class="font-medium text-foreground">2020 年至今</span>
+              <span class="text-muted-foreground">{isZh ? "运营时间" : "Operation"}</span>
+              <span class="font-medium text-foreground">{isZh ? "2020 年至今" : "Since 2020"}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-muted-foreground">专线类型</span>
-              <span class="font-medium text-primary">IEPL + 企业内网专线</span>
+              <span class="text-muted-foreground">{isZh ? "专线类型" : "Line Type"}</span>
+              <span class="font-medium text-primary">IEPL + {isZh ? "企业内网专线" : "Enterprise Lines"}</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-muted-foreground">协议支持</span>
+              <span class="text-muted-foreground">{isZh ? "协议支持" : "Protocols"}</span>
               <span class="font-medium text-foreground">VLESS / Shadowsocks</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-muted-foreground">支付方式</span>
-              <span class="font-medium text-foreground">支付宝 / 微信 / USDT</span>
+              <span class="text-muted-foreground">{isZh ? "支付方式" : "Payments"}</span>
+              <span class="font-medium text-foreground">Alipay / WeChat / USDT</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-muted-foreground">流媒体/AI</span>
-              <span class="font-medium text-emerald-500">全部原生解锁</span>
+              <span class="text-muted-foreground">{isZh ? "流媒体/AI" : "Unlock Status"}</span>
+              <span class="font-medium text-emerald-500">{isZh ? "全部原生解锁" : "100% Unlocked"}</span>
             </div>
           </div>
         </div>
@@ -139,18 +139,18 @@ const jsonLd = {
       <section class="mb-14">
         <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
           <Icon name="material-symbols:analytics-outline-rounded" class="text-primary" size={24} />
-          <span>Top 10 核心参数与资费横向一览表</span>
+          <span>{isZh ? "Top 10 核心参数与资费横向一览表" : "Top 10 Side-by-Side Comparison"}</span>
         </h2>
         <div class="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
           <table class="w-full text-left text-xs sm:text-sm">
             <thead class="bg-muted/60 border-b border-border text-muted-foreground font-semibold">
               <tr>
-                <th class="p-3.5">排名 / 品牌</th>
-                <th class="p-3.5">起步价格</th>
-                <th class="p-3.5">优惠码</th>
-                <th class="p-3.5">线路类型</th>
-                <th class="p-3.5">特色亮点</th>
-                <th class="p-3.5 text-right">直达 / 评测</th>
+                <th class="p-3.5">{isZh ? "排名 / 品牌" : "Rank / Brand"}</th>
+                <th class="p-3.5">{isZh ? "起步价格" : "Starting Price"}</th>
+                <th class="p-3.5">{isZh ? "优惠码" : "Code"}</th>
+                <th class="p-3.5">{isZh ? "线路类型" : "Line Type"}</th>
+                <th class="p-3.5">{isZh ? "特色亮点" : "Highlights"}</th>
+                <th class="p-3.5 text-right">{isZh ? "直达 / 评测" : "Action"}</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-border/60">
@@ -181,7 +181,7 @@ const jsonLd = {
                       rel="nofollow sponsored noopener"
                       class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs bg-primary text-primary-foreground hover:bg-primary/90 transition"
                     >
-                      <span>官网</span>
+                      <span>{isZh ? "官网" : "Official"}</span>
                       <Icon name="material-symbols:open-in-new-rounded" size={12} />
                     </a>
                   </td>
@@ -196,7 +196,7 @@ const jsonLd = {
       <section>
         <h2 class="text-2xl font-bold tracking-tight mb-6 flex items-center gap-2">
           <Icon name="material-symbols:grid-view-outline-rounded" class="text-primary" size={24} />
-          <span>Top 10 品牌独立简评卡片</span>
+          <span>{isZh ? "Top 10 品牌独立简评卡片" : "Top 10 Provider Cards"}</span>
         </h2>
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {top10Airports.map((brand) => (
