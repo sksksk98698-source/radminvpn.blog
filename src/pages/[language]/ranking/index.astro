@@ -1,0 +1,209 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Container from "@/components/atoms/container/Container.astro";
+import AirportCard from "@/components/molecules/airport-card/AirportCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { featuredAirport, top10Airports } from "@/data/airports";
+import BlogBase from "@/layouts/BlogBase.astro";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
+
+const locale = Astro.currentLocale || defaultLocale;
+const isZh = locale.startsWith("zh");
+
+const title = isZh
+  ? "2026 年度机场推荐排行榜 Top 10【专线稳定度与性价比实测对比】"
+  : "2026 Top 10 Proxy Providers Ranking & Speed Benchmark";
+
+const description = isZh
+  ? "2026 最新科学上网机场排行榜。第一主推光速云（年付折合8元起，优惠码AMM），汇集暮光加速、飞猫云、微风网络等Top 10专线机场深度测评与真实测速对比。"
+  : "Top 10 verified proxy services in 2026. Featuring Lightspeed Cloud, Twilight, Flycat and top IEPL providers with real benchmark data.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": title,
+  "description": description,
+  "itemListElement": top10Airports.map((b, idx) => ({
+    "@type": "ListItem",
+    "position": idx + 1,
+    "name": b.name,
+    "url": `https://radminvpn.blog/${locale}/airports/${b.id}/`
+  }))
+};
+---
+
+<BlogBase title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+
+  <Hero>
+    <div slot="beforeHeadline" class="mx-auto flex items-center gap-2">
+      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 flex items-center gap-1.5">
+        <Icon name="material-symbols:trophy-outline-rounded" size={16} />
+        <span>2026 年度权威实测排位</span>
+      </span>
+    </div>
+
+    <div class="container mx-auto tracking-tight leading-tight text-center max-w-4xl" slot="headline">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black mb-4">
+        {isZh ? "2026 年度机场推荐排行榜 Top 10" : "Top 10 Proxy Ranking 2026"}
+      </h1>
+      <p class="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        综合线路架构（IEPL/IPLC）、晚高峰延迟丢包率、流媒体及 ChatGPT 解锁能力、性价比与客服运维响应速度全面横评。
+      </p>
+    </div>
+  </Hero>
+
+  <Container>
+    <main class="pb-24">
+      <!-- Top 1 Highlight Box: 光速云 -->
+      <section class="mb-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-primary/15 via-background to-card border-2 border-primary/50 shadow-[0_0_35px_-5px_rgba(58,134,255,0.3)] relative overflow-hidden">
+        <div class="absolute -top-3 left-8 px-4 py-1 rounded-full text-xs font-black bg-primary text-primary-foreground shadow-md flex items-center gap-1">
+          <Icon name="material-symbols:award-star-outline-rounded" size={16} />
+          <span>🏆 年度综合总冠军 · 第一主推品牌</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center mt-2">
+          <div class="lg:col-span-2">
+            <div class="flex items-center gap-3 mb-3">
+              <h2 class="text-3xl sm:text-4xl font-black text-foreground">
+                1. {featuredAirport.name}
+              </h2>
+              <span class="px-3 py-0.5 rounded-full text-xs font-bold bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20">
+                专属码: {featuredAirport.couponCode}
+              </span>
+            </div>
+
+            <p class="text-sm sm:text-base text-muted-foreground leading-relaxed mb-4">
+              <strong>双专线架构：</strong> IEPL专线 + 企业级内网专线。2020年稳定运营至今，全平台自研客户端一键登录，并完美支持 Clash、Shadowrocket、v2rayN 通用订阅。实测解锁 Netflix 4K、TikTok 跨境电商直播与 ChatGPT。
+            </p>
+
+            <div class="flex flex-wrap gap-2 text-xs mb-6">
+              <span class="px-3 py-1 rounded-lg bg-primary/10 text-primary font-bold">折合约 8 元/月起</span>
+              <span class="px-3 py-1 rounded-lg bg-muted text-foreground">致敬斯诺克 147 元永久 247GB</span>
+              <span class="px-3 py-1 rounded-lg bg-emerald-500/10 text-emerald-600 font-semibold">附 5 张真实解锁实测图</span>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <a
+                href={featuredAirport.affUrl}
+                target="_blank"
+                rel="nofollow sponsored noopener"
+                class="px-6 py-3 rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition flex items-center gap-2"
+              >
+                <span>立即直达光速云官网</span>
+                <Icon name="material-symbols:open-in-new-rounded" size={16} />
+              </a>
+              <a
+                href={getRelativeLocaleUrl(locale, `/airports/${featuredAirport.id}/`)}
+                class="px-5 py-3 rounded-xl text-sm font-semibold border border-border hover:bg-muted text-foreground transition"
+              >
+                查看深度评测与测速报告
+              </a>
+            </div>
+          </div>
+
+          <div class="p-5 rounded-2xl bg-card border border-border/80 text-xs space-y-3">
+            <div class="font-bold text-foreground text-sm border-b border-border pb-2">光速云关键评测指标</div>
+            <div class="flex justify-between">
+              <span class="text-muted-foreground">运营时间</span>
+              <span class="font-medium text-foreground">2020 年至今</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-muted-foreground">专线类型</span>
+              <span class="font-medium text-primary">IEPL + 企业内网专线</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-muted-foreground">协议支持</span>
+              <span class="font-medium text-foreground">VLESS / Shadowsocks</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-muted-foreground">支付方式</span>
+              <span class="font-medium text-foreground">支付宝 / 微信 / USDT</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-muted-foreground">流媒体/AI</span>
+              <span class="font-medium text-emerald-500">全部原生解锁</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Comparison Matrix Table -->
+      <section class="mb-14">
+        <h2 class="text-2xl font-bold tracking-tight mb-4 flex items-center gap-2">
+          <Icon name="material-symbols:analytics-outline-rounded" class="text-primary" size={24} />
+          <span>Top 10 核心参数与资费横向一览表</span>
+        </h2>
+        <div class="overflow-x-auto rounded-2xl border border-border bg-card shadow-sm">
+          <table class="w-full text-left text-xs sm:text-sm">
+            <thead class="bg-muted/60 border-b border-border text-muted-foreground font-semibold">
+              <tr>
+                <th class="p-3.5">排名 / 品牌</th>
+                <th class="p-3.5">起步价格</th>
+                <th class="p-3.5">优惠码</th>
+                <th class="p-3.5">线路类型</th>
+                <th class="p-3.5">特色亮点</th>
+                <th class="p-3.5 text-right">直达 / 评测</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-border/60">
+              {top10Airports.map((brand) => (
+                <tr class={brand.isFeatured ? "bg-primary/5 font-semibold" : "hover:bg-muted/30 transition"}>
+                  <td class="p-3.5 font-bold flex items-center gap-2">
+                    <span class={`size-6 rounded-md flex items-center justify-center text-xs ${brand.rank === 1 ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground'}`}>
+                      {brand.rank}
+                    </span>
+                    <a href={getRelativeLocaleUrl(locale, `/airports/${brand.id}/`)} class="hover:text-primary transition">
+                      {brand.name}
+                    </a>
+                  </td>
+                  <td class="p-3.5 text-primary font-bold">{brand.startingPrice}</td>
+                  <td class="p-3.5">
+                    {brand.couponCode ? (
+                      <code class="px-2 py-0.5 rounded bg-muted text-foreground text-[11px] font-mono">{brand.couponCode}</code>
+                    ) : (
+                      <span class="text-muted-foreground text-xs">-</span>
+                    )}
+                  </td>
+                  <td class="p-3.5">{brand.lineTypes.join("+")}</td>
+                  <td class="p-3.5 text-muted-foreground text-xs line-clamp-1">{brand.uniqueSellingPoint}</td>
+                  <td class="p-3.5 text-right whitespace-nowrap">
+                    <a
+                      href={brand.affUrl}
+                      target="_blank"
+                      rel="nofollow sponsored noopener"
+                      class="inline-flex items-center gap-1 px-3 py-1 rounded-lg text-xs bg-primary text-primary-foreground hover:bg-primary/90 transition"
+                    >
+                      <span>官网</span>
+                      <Icon name="material-symbols:open-in-new-rounded" size={12} />
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Top 10 Cards Grid -->
+      <section>
+        <h2 class="text-2xl font-bold tracking-tight mb-6 flex items-center gap-2">
+          <Icon name="material-symbols:grid-view-outline-rounded" class="text-primary" size={24} />
+          <span>Top 10 品牌独立简评卡片</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {top10Airports.map((brand) => (
+            <AirportCard brand={brand} locale={locale} />
+          ))}
+        </div>
+      </section>
+    </main>
+  </Container>
+</BlogBase>

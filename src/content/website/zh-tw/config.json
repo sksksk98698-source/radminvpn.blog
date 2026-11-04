@@ -41,14 +41,29 @@
       "url": ""
     },
     {
-      "iconName": "material-symbols:article-outline-rounded",
-      "name": "文章",
-      "url": "post"
+      "iconName": "material-symbols:trophy-outline-rounded",
+      "name": "推薦榜",
+      "url": "ranking"
     },
     {
-      "iconName": "material-symbols:quick-phrases-rounded",
-      "name": "速記",
-      "url": "shortpost"
+      "iconName": "material-symbols:vpn-key-outline-rounded",
+      "name": "品牌庫",
+      "url": "airports"
+    },
+    {
+      "iconName": "material-symbols:speed-outline-rounded",
+      "name": "實測報告",
+      "url": "speedtest"
+    },
+    {
+      "iconName": "material-symbols:devices-outline-rounded",
+      "name": "客戶端",
+      "url": "clients"
+    },
+    {
+      "iconName": "material-symbols:article-outline-rounded",
+      "name": "組網技術",
+      "url": "post"
     }
   ]
 }

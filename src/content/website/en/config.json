@@ -1,54 +1,69 @@
 {
-	"setting": {
-		"projectUpdateBadgeUrl": "",
-		"githubCommentRepo": ""
-	},
-	"brand": {
-		"name": "Radmin VPN Blog",
-		"slogan": "Fast, Secure & Free Virtual Private Network Guide & Tech Insights",
-		"description": "Explore comprehensive setup guides, multiplayer gaming network configurations, and security insights for Radmin VPN.",
-		"themeColor": "#0d1b2a",
-		"thumbnail": {
-			"width": 1200,
-			"height": 630,
-			"src": "/images/brand/default-og.jpg",
-			"alt": "Radmin VPN Blog - Fast, Secure & Free Virtual Private Network"
-		},
-		"copyright": "漏 2026 Radmin VPN Blog. All rights reserved.",
-		"author": {
-			"name": "Radmin VPN Team",
-			"url": "https://radminvpn.blog"
-		},
-		"publisher": {
-			"name": "Radmin VPN Blog",
-			"url": "https://radminvpn.blog"
-		},
-		"supportMe": {
-			"githubUrl": ""
-		},
-		"socials": [
-			{
-				"name": "RSS",
-				"iconName": "simple-icons:rss",
-				"url": "https://radminvpn.blog/rss.xml"
-			}
-		]
-	},
-	"navigation": [
-		{
-			"iconName": "material-symbols:home-outline-rounded",
-			"name": "Home",
-			"url": ""
-		},
-		{
-			"iconName": "material-symbols:article-outline-rounded",
-			"name": "Articles",
-			"url": "post"
-		},
-		{
-			"iconName": "material-symbols:quick-phrases-rounded",
-			"name": "Quick Notes",
-			"url": "shortpost"
-		}
-	]
+  "setting": {
+    "projectUpdateBadgeUrl": "",
+    "githubCommentRepo": ""
+  },
+  "brand": {
+    "name": "Radmin VPN Blog",
+    "slogan": "Fast, Secure & Free Virtual Private Network Guide & Tech Insights",
+    "description": "Explore comprehensive setup guides, multiplayer gaming network configurations, and security insights for Radmin VPN.",
+    "themeColor": "#0d1b2a",
+    "thumbnail": {
+      "width": 1200,
+      "height": 630,
+      "src": "/images/brand/default-og.jpg",
+      "alt": "Radmin VPN Blog - Fast, Secure & Free Virtual Private Network"
+    },
+    "copyright": "漏 2026 Radmin VPN Blog. All rights reserved.",
+    "author": {
+      "name": "Radmin VPN Team",
+      "url": "https://radminvpn.blog"
+    },
+    "publisher": {
+      "name": "Radmin VPN Blog",
+      "url": "https://radminvpn.blog"
+    },
+    "supportMe": {
+      "githubUrl": ""
+    },
+    "socials": [
+      {
+        "name": "RSS",
+        "iconName": "simple-icons:rss",
+        "url": "https://radminvpn.blog/rss.xml"
+      }
+    ]
+  },
+  "navigation": [
+    {
+      "iconName": "material-symbols:home-outline-rounded",
+      "name": "Home",
+      "url": ""
+    },
+    {
+      "iconName": "material-symbols:trophy-outline-rounded",
+      "name": "Top Picks",
+      "url": "ranking"
+    },
+    {
+      "iconName": "material-symbols:vpn-key-outline-rounded",
+      "name": "Airports",
+      "url": "airports"
+    },
+    {
+      "iconName": "material-symbols:speed-outline-rounded",
+      "name": "Speedtests",
+      "url": "speedtest"
+    },
+    {
+      "iconName": "material-symbols:devices-outline-rounded",
+      "name": "Clients",
+      "url": "clients"
+    },
+    {
+      "iconName": "material-symbols:article-outline-rounded",
+      "name": "Guides",
+      "url": "post"
+    }
+  ]
 }

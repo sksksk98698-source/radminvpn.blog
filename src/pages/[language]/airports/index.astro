@@ -1,0 +1,108 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import { Icon } from "astro-icon/components";
+import Container from "@/components/atoms/container/Container.astro";
+import AirportCard from "@/components/molecules/airport-card/AirportCard.astro";
+import Hero from "@/components/molecules/hero/Hero.astro";
+import { airportBrands, featuredAirport, speedtestedAirports } from "@/data/airports";
+import BlogBase from "@/layouts/BlogBase.astro";
+import { defaultLocale, languages } from "@/utils/i18n.ts";
+
+export function getStaticPaths() {
+	return Object.keys(languages).map((language) => ({
+		params: { language },
+	}));
+}
+
+const locale = Astro.currentLocale || defaultLocale;
+const isZh = locale.startsWith('zh');
+
+const title = isZh ? "2026 机场品牌库大全 (42 家主流机场测评与专属优惠)" : "2026 Airport Directory - 42 Proxy Providers Review";
+const description = isZh
+  ? "收录 42 家主流代理机场品牌，涵盖 IEPL 专线、VLESS 协议与自研客户端支持情况。提供第一手测速截图证据链、流媒体解锁实测与专属折扣码。"
+  : "Comprehensive directory of 42 proxy providers with speed test proofs, streaming unlock results, protocols, and exclusive promo codes.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ItemList",
+  "name": title,
+  "description": description,
+  "itemListOrder": "https://schema.org/ItemListOrderDescending",
+  "numberOfItems": airportBrands.length,
+  "itemListElement": airportBrands.map((b, index) => ({
+    "@type": "ListItem",
+    "position": index + 1,
+    "name": b.name,
+    "url": `https://radminvpn.blog/${locale}/airports/${b.id}/`
+  }))
+};
+---
+
+<BlogBase title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
+
+  <Hero>
+    <div slot="beforeHeadline" class="mx-auto flex items-center gap-2">
+      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-primary/10 text-primary border border-primary/20 flex items-center gap-1.5">
+        <Icon name="material-symbols:vpn-key-outline-rounded" size={16} />
+        <span>42 家品牌已核实归档</span>
+      </span>
+      <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+        实测快照已上线
+      </span>
+    </div>
+
+    <div class="container mx-auto tracking-tight leading-tight text-center max-w-4xl" slot="headline">
+      <h1 class="text-3xl sm:text-5xl md:text-6xl font-black mb-4">
+        {isZh ? "42 家主流机场品牌实测库" : "42 Proxy Brands Directory"}
+      </h1>
+      <p class="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+        {isZh ? "拒绝虚构跑分与盲目吹捧。基于实测测速快照、协议架构与真实价格梯度，帮助您精准锁定最适合的高速科学上网服务。" : "Real measurements, no exaggerated claims. Filter through IEPL, protocols, and actual pricing."}
+      </p>
+    </div>
+  </Hero>
+
+  <Container>
+    <main class="pb-24">
+      <!-- Quick Filter Nav -->
+      <div class="mb-8 p-4 rounded-2xl bg-card border border-border flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2">
+          <a href="#all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-primary text-primary-foreground shadow-sm">
+            全部 ({airportBrands.length})
+          </a>
+          <a href={getRelativeLocaleUrl(locale, "/ranking/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition">
+            🏆 Top 10 推荐榜
+          </a>
+          <a href={getRelativeLocaleUrl(locale, "/speedtest/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition flex items-center gap-1">
+            <Icon name="material-symbols:speed-outline-rounded" size={14} class="text-emerald-500" />
+            <span>含实测大图 ({speedtestedAirports.length})</span>
+          </a>
+          <a href={getRelativeLocaleUrl(locale, "/clients/")} class="px-3 py-1.5 rounded-lg text-xs font-medium bg-muted hover:bg-muted/80 text-foreground transition">
+            📱 客户端配置
+          </a>
+        </div>
+
+        <div class="text-xs text-muted-foreground flex items-center gap-1">
+          <Icon name="material-symbols:verified-outline-rounded" class="text-primary" size={16} />
+          <span>第一主推: <strong class="text-primary">{featuredAirport.name}</strong>（优惠码: {featuredAirport.couponCode}）</span>
+        </div>
+      </div>
+
+      <!-- Compliance Disclosure Notice -->
+      <div class="mb-10 p-4 rounded-xl bg-muted/40 border border-border/80 text-xs text-muted-foreground leading-relaxed flex items-start gap-2.5">
+        <Icon name="material-symbols:shield-outline" class="text-primary shrink-0 mt-0.5" size={18} />
+        <div>
+          <strong class="text-foreground">合规透明度提示：</strong>
+          本页面收录的注册链接包含合作推广标识（统一规范 `rel="nofollow sponsored noopener"`）。若您通过链接注册购买，本站可能会获得少量维护佣金，但这绝不会增加您的实际支付成本。所有节点测速与流媒体解锁图均为标注时间点的真实实测证据，不编造虚假数据。
+        </div>
+      </div>
+
+      <!-- Airport Grid -->
+      <div id="all" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {airportBrands.map((brand) => (
+          <AirportCard brand={brand} locale={locale} />
+        ))}
+      </div>
+    </main>
+  </Container>
+</BlogBase>

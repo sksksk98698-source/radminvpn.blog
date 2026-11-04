@@ -1,0 +1,55 @@
+---
+import { Icon } from "astro-icon/components";
+import type { SpeedtestMetadata } from "@/types/airport";
+
+export interface Props {
+  speedtest: SpeedtestMetadata;
+  brandName: string;
+}
+
+const { speedtest, brandName } = Astro.props;
+---
+
+<div class="my-8 rounded-2xl border border-border bg-card/60 overflow-hidden shadow-sm">
+  <div class="p-4 sm:p-5 border-b border-border bg-muted/30 flex flex-wrap items-center justify-between gap-3">
+    <div class="flex items-center gap-2.5">
+      <div class="p-2 rounded-xl bg-primary/10 text-primary">
+        <Icon name="material-symbols:speed-outline-rounded" size={20} />
+      </div>
+      <div>
+        <h4 class="text-sm sm:text-base font-bold text-foreground flex items-center gap-2">
+          <span>{brandName} 节点测速实测报告</span>
+          <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">真实证据链</span>
+        </h4>
+        <p class="text-xs text-muted-foreground mt-0.5">测试工具: {speedtest.tool} · 协议: {speedtest.protocol} · 实测时间: {speedtest.testedAt}</p>
+      </div>
+    </div>
+
+    <div class="text-xs text-muted-foreground bg-background px-3 py-1.5 rounded-lg border border-border flex items-center gap-1.5">
+      <Icon name="material-symbols:info-outline-rounded" size={15} class="text-primary shrink-0" />
+      <span>单日晚高峰实测快照 · 保持原始图无裁剪</span>
+    </div>
+  </div>
+
+  <!-- Image Container -->
+  <div class="relative p-2 sm:p-4 bg-black/5 dark:bg-black/30 flex justify-center">
+    <a href={speedtest.file} target="_blank" rel="noopener" class="block group relative overflow-hidden rounded-xl border border-border/80 shadow-md max-w-2xl w-full">
+      <img
+        src={speedtest.file}
+        alt={`${brandName} 节点测速实测图`}
+        loading="lazy"
+        class="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.01]"
+      />
+      <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-medium text-sm">
+        <Icon name="material-symbols:zoom-in-rounded" size={20} />
+        <span>点击查看 1122×1402 原图</span>
+      </div>
+    </a>
+  </div>
+
+  <!-- Disclaimer Footer -->
+  <div class="px-4 py-3 bg-muted/20 border-t border-border/60 text-[11px] text-muted-foreground flex items-start gap-2">
+    <span class="font-semibold text-foreground/80 shrink-0">说明:</span>
+    <span>该测速截图为本站测试档案真实留存。测速受本地运营商线路、晚高峰时段及国际出口波动影响，仅代表当次测试环境，建议结合自身网络挑选最适节点。</span>
+  </div>
+</div>

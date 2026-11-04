@@ -41,14 +41,29 @@
       "url": ""
     },
     {
-      "iconName": "material-symbols:article-outline-rounded",
-      "name": "文章",
-      "url": "post"
+      "iconName": "material-symbols:trophy-outline-rounded",
+      "name": "推荐榜",
+      "url": "ranking"
     },
     {
-      "iconName": "material-symbols:quick-phrases-rounded",
-      "name": "简报",
-      "url": "shortpost"
+      "iconName": "material-symbols:vpn-key-outline-rounded",
+      "name": "品牌库",
+      "url": "airports"
+    },
+    {
+      "iconName": "material-symbols:speed-outline-rounded",
+      "name": "实测报告",
+      "url": "speedtest"
+    },
+    {
+      "iconName": "material-symbols:devices-outline-rounded",
+      "name": "客户端",
+      "url": "clients"
+    },
+    {
+      "iconName": "material-symbols:article-outline-rounded",
+      "name": "组网技术",
+      "url": "post"
     }
   ]
 }
