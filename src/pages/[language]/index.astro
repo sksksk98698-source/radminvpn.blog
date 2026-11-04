@@ -41,12 +41,42 @@ export function getStaticPaths() {
 		params: { language },
 	}));
 }
+
+const homeSchema = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://radminvpn.blog/#website",
+      "url": `https://radminvpn.blog/${locale}/`,
+      "name": brand.name,
+      "description": isZh ? "专注高端网络加速评测、IEPL专线机场实测证据链与 Radmin VPN 远程虚拟组网指南" : brand.description,
+      "inLanguage": isZh ? (locale === "zh-tw" ? "zh-Hant-TW" : "zh-Hans") : "en",
+      "publisher": {
+        "@id": "https://radminvpn.blog/#organization"
+      }
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://radminvpn.blog/#organization",
+      "name": brand.name,
+      "url": "https://radminvpn.blog/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://radminvpn.blog/images/brand/favicon/apple-touch-icon.png",
+        "width": 180,
+        "height": 180
+      }
+    }
+  ]
+};
 ---
 
 <BlogBase>
-  <slot name="head">
+  <slot name="head" slot="head">
     <link href={`${import.meta.env.BASE_URL}pagefind/pagefind-ui.css`} rel="stylesheet">
     <script is:inline src={`${import.meta.env.BASE_URL}pagefind/pagefind-ui.js`}></script>
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(homeSchema)} />
   </slot>
 
   <!-- Hero with Signature Avatar Visual -->

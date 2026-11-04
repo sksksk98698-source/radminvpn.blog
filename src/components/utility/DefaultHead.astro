@@ -1,4 +1,4 @@
-﻿---
+---
 import { SEO } from "astro-seo";
 import ThemeManager from "@/components/utility/ThemeManager.astro";
 import type { GlobalHead } from "@/types/layouts";
@@ -14,7 +14,7 @@ import {
 export interface Props extends GlobalHead {}
 
 const { title, description, thumbnail } = Astro.props;
-const { brand } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
+const { brand, setting } = (await currentLocaleWebsiteConfig(Astro.currentLocale)).data;
 const base = import.meta.env.BASE_URL ?? "/";
 const cleanBase = base.replace(/\/$/, "");
 const siteOrigin = (Astro.site?.toString() || baseUrl).replace(/\/$/, "");
@@ -22,7 +22,13 @@ const siteOrigin = (Astro.site?.toString() || baseUrl).replace(/\/$/, "");
 const seoTitle = `${title || brand.slogan} - ${brand.name}`;
 const seoDescription = description || brand.description;
 
-const canonicalURL = new URL(Astro.url.pathname, siteOrigin).toString();
+const cleanPath = Astro.url.pathname.replace(/\/?$/, "/");
+const canonicalURL = new URL(cleanPath, siteOrigin).toString();
+
+const googleVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION || setting?.verification?.google;
+const bingVerification = import.meta.env.PUBLIC_BING_SITE_VERIFICATION || setting?.verification?.bing;
+const shenmaVerification = import.meta.env.PUBLIC_SHENMA_SITE_VERIFICATION || setting?.verification?.shenma;
+const baiduVerification = import.meta.env.PUBLIC_BAIDU_SITE_VERIFICATION || setting?.verification?.baidu;
 
 const rawImageSrc = thumbnail?.src || brand.thumbnail.src;
 const resolvedImageSrc = rawImageSrc.startsWith("http")
@@ -142,6 +148,10 @@ function replaceLocaleInPath(pathname: string, targetLocale: string): string {
             name: 'theme-color',
             content: brand.themeColor,
           },
+          ...(googleVerification ? [{ name: 'google-site-verification', content: googleVerification }] : []),
+          ...(bingVerification ? [{ name: 'msvalidate.01', content: bingVerification }] : []),
+          ...(shenmaVerification ? [{ name: 'shenma-site-verification', content: shenmaVerification }] : []),
+          ...(baiduVerification ? [{ name: 'baidu-site-verification', content: baiduVerification }] : []),
         ],
       }}
     />

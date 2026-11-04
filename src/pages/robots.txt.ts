@@ -1,15 +1,28 @@
-﻿import type { APIRoute } from "astro";
+import type { APIRoute } from "astro";
 import { baseUrl } from "@/utils/i18n";
 
 // cdn-cgi
 // https://developers.cloudflare.com/fundamentals/reference/cdn-cgi-endpoint/#disallow-using-robotstxt
-const siteUrl = import.meta.env.SITE || baseUrl;
+const siteUrl = (import.meta.env.SITE || baseUrl).replace(/\/$/, "");
 const robotsTxt = `
 User-agent: *
 Allow: /
 Disallow: /cdn-cgi/
 
-Sitemap: ${new URL("sitemap-index.xml", siteUrl).href}
+User-agent: Googlebot
+Allow: /
+
+User-agent: bingbot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: yisouspider
+Allow: /
+
+Sitemap: ${siteUrl}/sitemap-index.xml
+Sitemap: ${siteUrl}/sitemap.xml
 `.trim();
 
 // eslint-disable-next-line import/prefer-default-export

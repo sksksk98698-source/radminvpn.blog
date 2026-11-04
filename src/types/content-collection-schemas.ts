@@ -45,6 +45,14 @@ export const websiteSchema = z.object({
 	setting: z.object({
 		projectUpdateBadgeUrl: z.string().default(""),
 		githubCommentRepo: z.string().default(""),
+		verification: z
+			.object({
+				google: z.string().default(""),
+				bing: z.string().default(""),
+				shenma: z.string().default(""),
+				baidu: z.string().default(""),
+			})
+			.default({}),
 	}),
 	brand: z.object({
 		name: z.string(),

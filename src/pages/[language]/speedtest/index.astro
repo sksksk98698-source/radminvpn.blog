@@ -24,9 +24,35 @@ const title = isZh
 const description = isZh
   ? "汇集 17 家主流机场 2026 晚高峰节点实测测速报告。涵盖光速云、飞猫云、微风网络、星岛梦等，保留原始1122×1402高清长图与测试时间戳，真实可溯源。"
   : "Real speedtest screenshots and latency proofs for 17 leading proxy services tested during peak hours. Full resolution PNGs with timestamps preserved.";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": title,
+  "description": description,
+  "url": `https://radminvpn.blog/${locale}/speedtest/`,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": isZh ? "首页" : "Home",
+        "item": `https://radminvpn.blog/${locale}/`
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": isZh ? "实测报告" : "Speedtest Proofs",
+        "item": `https://radminvpn.blog/${locale}/speedtest/`
+      }
+    ]
+  }
+};
 ---
 
 <BlogBase title={title} description={description}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} slot="head" />
   <Hero>
     <div slot="beforeHeadline" class="mx-auto flex items-center gap-2">
       <span class="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 flex items-center gap-1.5">
