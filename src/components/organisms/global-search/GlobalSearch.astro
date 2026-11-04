@@ -1,4 +1,4 @@
-﻿---
+---
 // Code is modified from astro-theme-catus -> https://github.com/chrismwilliams/astro-theme-cactus/blob/d0caae8ea88bb589e98e447951d6de1834c821e8/src/components/Search.astro
 // Heavy inspiration taken from Astro Starlight -> https://github.com/withastro/starlight/blob/main/packages/starlight/components/Search.astro
 
@@ -30,7 +30,7 @@ const t = useTranslations(getLocale(Astro.currentLocale));
 		<div class="dialog-frame flex flex-col gap-4 p-6 md:p-12">
 
 			<div class="flex justify-between pb-2 font-bold">
-				<h2 class="text-xl">{t("basic_orange_skunk_charm")}</h2>
+				<div class="text-xl font-bold" role="heading" aria-level="2">{t("basic_orange_skunk_charm")}</div>
 				
 				<Button class="self-end cursor-pointer" data-close-modal variant="outline" size="lg">
 					{t("loose_mellow_gecko_splash")}

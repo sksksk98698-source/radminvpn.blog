@@ -8,20 +8,20 @@ export interface Props {
 const { statusText = "42 家机场节点实测已收录" } = Astro.props;
 ---
 
-<div class="relative inline-flex flex-col items-center gap-2.5 group select-none">
+<div class="relative inline-flex flex-col items-center gap-3 group select-none shrink-0">
   <!-- Glowing Avatar Card -->
-  <div class="relative flex items-center justify-center p-4 rounded-2xl bg-gradient-to-b from-primary/20 via-primary/5 to-transparent border border-primary/30 shadow-[0_0_30px_-5px_rgba(58,134,255,0.3)] transition-all duration-300 group-hover:border-primary/60 group-hover:shadow-[0_0_40px_0px_rgba(58,134,255,0.4)]">
-    <div class="size-14 sm:size-16 flex items-center justify-center">
-      <Logo width={64} height={64} class="w-full h-full drop-shadow-md" />
+  <div class="relative flex items-center justify-center size-20 sm:size-24 rounded-3xl bg-gradient-to-b from-primary/20 via-primary/5 to-card/40 border border-primary/30 shadow-[0_10px_30px_-10px_rgba(58,134,255,0.35)] transition-all duration-300 group-hover:border-primary/60 group-hover:scale-105 group-hover:shadow-[0_15px_40px_-5px_rgba(58,134,255,0.45)] backdrop-blur-md">
+    <div class="size-12 sm:size-14 flex items-center justify-center">
+      <Logo width={56} height={56} class="w-full h-full drop-shadow-md text-primary" />
     </div>
   </div>
 
-  <!-- Real-time Status Badge Pill -->
-  <div class="inline-flex items-center gap-2 px-3 py-0.5 rounded-full text-[11px] sm:text-xs font-medium bg-card/90 border border-primary/30 shadow-sm text-foreground/90 backdrop-blur-sm whitespace-nowrap">
+  <!-- Real-time Status Badge Pill (Guaranteed Never Wrap) -->
+  <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-card/95 border border-primary/30 shadow-sm text-foreground/90 backdrop-blur-md whitespace-nowrap shrink-0 min-w-max w-max">
     <span class="relative flex size-2 shrink-0">
       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
       <span class="relative inline-flex rounded-full size-2 bg-emerald-500"></span>
     </span>
-    <span>{statusText}</span>
+    <span class="leading-none whitespace-nowrap select-none">{statusText}</span>
   </div>
 </div>

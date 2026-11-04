@@ -1,0 +1,44 @@
+---
+isDraft: false
+icon:
+  title: "2026 全平台科学上网客户端配置实战："
+  name: "material-symbols:article-outline-rounded"
+headline: "2026 全平台科学上网客户端配置实战：Clash Verge Rev 与 Sing-box 进阶指南"
+subHeadline: "跨平台无缝部署，详解 TUN 虚拟网卡模式、双 DNS 防污染与自动故障转移"
+excerpt: "专为新手与极客打造的全平台客户端实操宝典，涵盖 Windows、macOS、iOS 与 Android 主流工具配置与规则调优。"
+category: "Guide"
+tags:
+  - "客户端教程"
+  - "Clash"
+  - "Sing-box"
+  - "TUN模式"
+  - "规则配置"
+themeColor: "#0ea5e9"
+publishDate: 2026-11-04
+lastModifiedDate: 2026-11-04
+---
+
+工欲善其事，必先利其器。即使采购了顶级的专线节点，如果在客户端配置中忽视了 DNS 分流规则或虚拟网卡模式，依然可能会遭遇网页解析缓慢、国内应用打不开或 IP 泄漏的问题。
+
+### 一、主流客户端生态全景扫描
+
+1. **Windows 与 macOS 桌面端首选：Clash Verge Rev**
+   - 基于开源 Clash Meta（Mihomo）内核开发，界面现代清爽，全面支持中文，且自带智能订阅解析器与脚本扩展机制。
+   - 具备开机自启、系统代理与增强型 TUN 虚拟网卡模式的一键切换能力。
+2. **极客与性能追求者新宠：Sing-box**
+   - 采用纯 Go 语言编写，内存占用极低，跨平台覆盖从软路由、手机到服务器的各种场景。
+   - 原生支持最新的 TUIC、Hysteria2 以及 WireGuard 协议出站。
+3. **移动端经典老牌**：iOS 推荐 Shadowrocket（小火箭）或 Loon；Android 推荐 Clash Meta for Android 或 sing-box for Android。
+
+### 二、三大关键进阶配置深度拆解
+
+#### 1. 开启 TUN 模式接管全局流量
+传统的系统代理仅能接管支持 HTTP / SOCKS5 代理协议的浏览器和少量应用。而诸如 Git 终端命令、游戏客户端、以及部分开发工具不会主动读取系统代理配置。开启 TUN 虚拟网卡模式后，系统在底层安装一个虚拟网卡，通过路由表接管所有应用层发往公网的全部 IP 数据包。
+
+#### 2. 双 DNS 解析器防污染配置
+在客户端配置中，将国内域名白名单（Direct）指向本地运营商 DNS（如 223.5.5.5 或 119.29.29.29），确保国内 CDN 秒级解析就近接入；将海外域名（Proxy）强制经由专线隧道向远程加密 DNS（如 8.8.8.8 或 1.1.1.1）发起查询，彻底粉碎本地运营商的 DNS 劫持。
+
+#### 3. 故障转移自动降级配置
+为了防止单一节点突发故障，建议在配置中将主力节点与备用节点加入 Fallback 策略组，设置合理的健康检查间隔，实现毫秒级自动切换。
+
+更多客户端官方下载与详细参数对照，请移步本站的 [全平台客户端指南专区](/zh-cn/clients/)。

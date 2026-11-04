@@ -136,7 +136,9 @@ export default defineConfig({
 		mdx({
 			drafts: false,
 		}),
-		sitemap(),
+		sitemap({
+			filter: (page) => !page.includes("/post/api/"),
+		}),
 		react({
 			include: ["**/react/*"],
 		}),

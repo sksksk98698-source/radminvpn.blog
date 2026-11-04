@@ -1,4 +1,4 @@
-﻿---
+---
 import type { CollectionEntry } from "astro:content";
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { Icon } from "astro-icon/components";
@@ -49,29 +49,29 @@ const {
 ---
 
 <SpotlightCard themeColor={themeColor}>
-  <article class={`flex h-full flex-col justify-between gap-8  ${icon ? 'pt-8' : ''}`}>
+  <article class={`flex h-full flex-col justify-between gap-6 sm:gap-8 ${icon ? 'pt-8' : ''}`}>
     {
       icon && (
         <div
           style={`background-color: ${themeColor}`}
-          class="absolute size-16 left-0 top-0 ml-4 -translate-y-1/2 transform-gpu overflow-hidden rounded-lg flex justify-center items-center"
+          class="absolute size-14 sm:size-16 left-0 top-0 ml-5 -translate-y-1/2 transform-gpu overflow-hidden rounded-xl shadow-lg ring-4 ring-background flex justify-center items-center transition-transform group-hover:scale-105"
         >
-          <Icon size={32} class="text-black" name={icon.name} title={icon.title} />
+          <Icon size={30} class="text-black" name={icon.name} title={icon.title} />
         </div>
       )
     }
     <div>
-      <h2 class="mb-4 text-lg font-medium">
+      <h2 class="mb-3 text-xl sm:text-2xl font-bold tracking-tight text-foreground transition hover:text-primary">
         {url && <a rel="nofollow" href={url}>{headline}</a>}
         {id && !url && <a data-astro-prefetch href={getRelativeLocaleUrl(Astro.currentLocale || defaultLocale, `/post/${stripLanguageCode(id)}/`)}>{headline}</a>}
         {!url && !id && headline}
       </h2>
-      <p class="line-clamp-3 prose">{excerpt}</p>
+      <p class="line-clamp-3 text-sm sm:text-base text-muted-foreground leading-relaxed">{excerpt}</p>
     </div>
-    <div class="flex flex-wrap items-center justify-between">
+    <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-border/40">
       {
         publishDate && (
-          <time class="text-sm opacity-60 transition-opacity hover:opacity-100">
+          <time class="text-xs sm:text-sm font-medium text-muted-foreground">
             {publishDate
               .toLocaleDateString('zh-TW', { year: 'numeric', month: '2-digit', day: '2-digit' })
               .replace(/\//g, '-')}
@@ -79,7 +79,7 @@ const {
         )
       }
 
-      <div class="flex flex-wrap">
+      <div class="flex flex-wrap items-center gap-1.5">
         {
           category && (
             <CategoryList {...(categoryHref && ({categoryHref}))} {category} />

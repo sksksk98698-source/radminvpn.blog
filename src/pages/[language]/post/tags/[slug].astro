@@ -25,15 +25,24 @@ export async function getStaticPaths() {
 	);
 }
 
-const t = useTranslations(getLocale(Astro.currentLocale));
+const locale = Astro.currentLocale || defaultLocale;
+const isZh = locale.startsWith("zh");
+const t = useTranslations(getLocale(locale));
 const { slug } = Astro.params;
 const { posts, tags } = Astro.props;
 const avaliableCurrentTagPosts = posts
 	.filter((post) => post.data.tags.includes(slug as string))
 	.sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime());
+
+const tagDesc = isZh 
+  ? `查阅与 #${slug} 主题相关的精选网络技术教程、评测与实操指南。`
+  : `Explore in-depth technical guides and reviews tagged with #${slug}.`;
 ---
 
-<BlogBase title={t("late_nice_flea_gasp")+slug} description={t("glad_sound_nils_create")}>
+<BlogBase title={t("late_nice_flea_gasp")+slug} description={tagDesc}>
+  {avaliableCurrentTagPosts.length <= 1 && (
+    <meta name="robots" content="noindex, follow" slot="head" />
+  )}
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>

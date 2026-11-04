@@ -45,9 +45,14 @@ const translatedCategory = (() => {
 	console.warn(`Category translation not found: ${slug}`);
 	return slug;
 })();
+const locale = Astro.currentLocale || defaultLocale;
+const isZh = locale.startsWith("zh");
+const catDesc = isZh
+  ? `查阅与 ${translatedCategory} 分类相关的全部精选技术教程与评测文章。`
+  : `Browse all technical tutorials and reviews filed under ${translatedCategory}.`;
 ---
 
-<BlogBase title={`${t("grassy_smart_sheep_tickle")}${translatedCategory}`} description={t("fluffy_active_earthworm_feel")}>
+<BlogBase title={`${t("grassy_smart_sheep_tickle")}${translatedCategory}`} description={catDesc}>
   <Hero>
     <div slot="beforeHeadline" class="flex mx-0 md:mx-auto gap-4 md:gap-8">
       <Badge>

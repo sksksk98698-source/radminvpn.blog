@@ -51,6 +51,21 @@
       "url": "airports"
     },
     {
+      "iconName": "material-symbols:redeem-rounded",
+      "name": "Free Tools",
+      "url": "free"
+    },
+    {
+      "iconName": "material-symbols:quiz-outline-rounded",
+      "name": "FAQ Guide",
+      "url": "faq"
+    },
+    {
+      "iconName": "material-symbols:warning-outline-rounded",
+      "name": "Risk Alert",
+      "url": "risk-alert"
+    },
+    {
       "iconName": "material-symbols:speed-outline-rounded",
       "name": "Speedtests",
       "url": "speedtest"

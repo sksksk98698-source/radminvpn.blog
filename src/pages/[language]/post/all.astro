@@ -20,16 +20,23 @@ export function getStaticPaths() {
 	}));
 }
 
-const t = useTranslations(getLocale(Astro.currentLocale));
-const posts = dateSortedLocaleRelatedPosts(getLocale(Astro.currentLocale));
+const locale = Astro.currentLocale || defaultLocale;
+const isZh = locale.startsWith("zh");
+const t = useTranslations(getLocale(locale));
+const posts = dateSortedLocaleRelatedPosts(getLocale(locale));
 const total = posts.length;
 const isFirstPage = true;
 const showBadges = isFirstPage;
+
+const archiveTitle = isZh ? "全部历史文章完整归档" : "Complete Blog Archives & Articles";
+const archiveDesc = isZh 
+  ? `浏览 Radmin VPN 博客收录的全部 ${total} 篇技术教程、专线机场测评与安全避险指南完整归档。`
+  : `Browse the complete collection of all ${total} technical guides, proxy reviews, and networking tutorials on Radmin VPN Blog.`;
 ---
 
 <BlogBase 
-  title={t("still_mad_javelina_propel")} 
-  description={t("tired_game_husky_sew", {number: total})}
+  title={archiveTitle} 
+  description={archiveDesc}
 >
   <Hero>
     {showBadges && (
@@ -57,7 +64,7 @@ const showBadges = isFirstPage;
     </Fragment>
   </Hero>
   <Container>
-    <section>
+    <section class="max-w-4xl mx-auto pb-16">
       <h2 class="sr-only">{t("born_full_liger_create")}</h2>
       <SpotlightCardsGallery>
         {

@@ -51,6 +51,21 @@
       "url": "airports"
     },
     {
+      "iconName": "material-symbols:redeem-rounded",
+      "name": "免费资源",
+      "url": "free"
+    },
+    {
+      "iconName": "material-symbols:quiz-outline-rounded",
+      "name": "百科FAQ",
+      "url": "faq"
+    },
+    {
+      "iconName": "material-symbols:warning-outline-rounded",
+      "name": "跑路预警",
+      "url": "risk-alert"
+    },
+    {
       "iconName": "material-symbols:speed-outline-rounded",
       "name": "实测报告",
       "url": "speedtest"

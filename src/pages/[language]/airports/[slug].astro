@@ -63,33 +63,32 @@ const jsonLd = {
       ]
     },
     {
-      "@type": "Product",
-      "name": `${brand.name} 加速网络服务`,
+      "@type": "Review",
+      "name": isZh ? `${brand.name} 线路质量实测评估报告` : `${brand.name} Independent Performance Review`,
+      "headline": isZh ? `${brand.name} 2026 专线实测与选购指南` : `${brand.name} Proxy Benchmark & Buying Guide`,
       "description": brand.summary,
-      "brand": {
-        "@type": "Brand",
-        "name": brand.name
+      "itemReviewed": {
+        "@type": "Service",
+        "name": brand.name,
+        "description": brand.summary
       },
-      "offers": {
-        "@type": "AggregateOffer",
-        "priceCurrency": "CNY",
-        "lowPrice": brand.startingPrice.replace(/[^0-9.]/g, '') || "10",
-        "offerCount": brand.packages.length
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": brand.rank === 1 ? "5.0" : (brand.rank <= 5 ? "4.8" : "4.5"),
+        "bestRating": "5"
       },
-      "review": {
-        "@type": "Review",
-        "reviewRating": {
-          "@type": "Rating",
-          "ratingValue": brand.rank === 1 ? "5.0" : (brand.rank <= 5 ? "4.8" : "4.5"),
-          "bestRating": "5"
-        },
-        "author": {
-          "@type": "Organization",
-          "name": "Radmin VPN Lab"
-        },
-        "datePublished": "2026-08-12",
-        "reviewBody": brand.summary
-      }
+      "author": {
+        "@type": "Organization",
+        "name": isZh ? "Radmin VPN 技术团队" : "Radmin VPN Technical Team",
+        "url": `https://radminvpn.blog/${locale}/`
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": isZh ? "Radmin VPN 博客" : "Radmin VPN Blog",
+        "url": "https://radminvpn.blog"
+      },
+      "datePublished": "2026-08-12",
+      "dateModified": "2026-11-04"
     },
     {
       "@type": "FAQPage",

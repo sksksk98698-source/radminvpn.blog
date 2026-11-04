@@ -8,6 +8,7 @@ import SpotlightCard from "@/components/atoms/spotlight-card/SpotlightCard.astro
 import SpotlightCardsGallery from "@/components/atoms/spotlight-cards-gallery/SpotlightCardsGallery.astro";
 import Hero from "@/components/molecules/hero/Hero.astro";
 import GlobalSearchInput from "@/components/organisms/global-search-input/GlobalSearchInput.astro";
+import HomeSeoGuide from "@/components/organisms/home-seo-guide/HomeSeoGuide.astro";
 import { featuredAirport, top10Airports, speedtestedAirports } from "@/data/airports";
 import { getLocale, type TranslationKey, useTranslations } from "@/i18n/i18n";
 import BlogBase from "@/layouts/BlogBase.astro";
@@ -55,21 +56,22 @@ export function getStaticPaths() {
       <AvatarBadge statusText="42 家机场节点实测已收录" />
     </div>
 
-    <div class="container mx-auto tracking-tight leading-tight text-center max-w-4xl" slot="headline">
-      <div class="mb-3">
-        <span class="bg-gradient-to-r from-primary via-blue-500 to-teal-400 bg-clip-text text-transparent font-black text-4xl sm:text-6xl md:text-7xl">
-          {brand.name}
-        </span>
-      </div>
-      <p class="text-base sm:text-xl font-medium tracking-normal text-muted-foreground mt-3 leading-relaxed max-w-2xl mx-auto">
+    <Fragment slot="headline">
+      <span class="bg-gradient-to-r from-primary via-blue-500 to-teal-400 bg-clip-text text-transparent">
+        {brand.name}
+      </span>
+    </Fragment>
+
+    <div class="flex flex-col items-center text-center -mt-4 sm:-mt-6">
+      <p class="text-base sm:text-xl font-medium tracking-normal text-muted-foreground leading-relaxed max-w-2xl mx-auto">
         {isZh ? "专注高端网络加速评测、IEPL专线机场实测证据链与 Radmin VPN 远程虚拟组网指南" : brand.slogan}
       </p>
 
       <!-- Conversion Action Hub -->
-      <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div class="mt-7 sm:mt-9 flex flex-wrap items-center justify-center gap-3.5 sm:gap-4">
         <a
           href={getRelativeLocaleUrl(locale, "/ranking/")}
-          class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition flex items-center gap-1.5"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-md transition shrink-0 whitespace-nowrap"
         >
           <Icon name="material-symbols:trophy-outline-rounded" size={18} />
           <span>2026 机场推荐排行榜</span>
@@ -79,7 +81,7 @@ export function getStaticPaths() {
           href={featuredAirport.affUrl}
           target="_blank"
           rel="nofollow sponsored noopener"
-          class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 transition flex items-center gap-1.5"
+          class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 border border-amber-500/30 transition shrink-0 whitespace-nowrap"
         >
           <Icon name="material-symbols:bolt-outline-rounded" size={18} />
           <span>第一主推: {featuredAirport.name}（码: {featuredAirport.couponCode}）</span>
@@ -87,9 +89,9 @@ export function getStaticPaths() {
 
         <a
           href={getRelativeLocaleUrl(locale, "/airports/")}
-          class="px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium border border-border hover:bg-muted text-foreground transition"
+          class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium border border-border hover:bg-muted text-foreground transition shrink-0 whitespace-nowrap"
         >
-          浏览 42 家品牌库
+          <span>浏览 42 家品牌库</span>
         </a>
       </div>
     </div>
@@ -255,6 +257,15 @@ export function getStaticPaths() {
       </SpotlightCardsGallery>
     </Container>
   </section>
+
+  <!-- Authoritative SEO Pillar Section (for Chinese locales) -->
+  {isZh && (
+    <section class="pb-16">
+      <Container>
+        <HomeSeoGuide />
+      </Container>
+    </section>
+  )}
 
   <!-- Original Theme Category Posts Section (Radmin VPN Technical Heritage) -->
   <section class="pb-24">
